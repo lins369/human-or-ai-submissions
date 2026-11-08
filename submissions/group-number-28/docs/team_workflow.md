@@ -2,6 +2,9 @@
 
 Names A/B/C identify ownership; agreed members are Lin/A, Alex/B, Gabriel/C.
 
+Use English for uploaded documentation, code comments, commit messages, and
+pull request titles/descriptions.
+
 | Role | Main report sections | Independent responsibility |
 | --- | --- | --- |
 | A (Lin) | Q1, Q5 | Supervised comparisons, tuning, early score candidates, controlled improvement |
