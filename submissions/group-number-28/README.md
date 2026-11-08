@@ -41,12 +41,15 @@ experiments/generalization/ B: Q2 learning curves + Q4 error analysis
 experiments/semisupervised/ C: Q3 unlabeled learning
 results/<track>/<run_id>/  Per-run config, metrics, validation predictions
 submissions/               Candidate test predictions + actual upload log
-report/sections/           Report sections organized by question Q0–Q6
-report/figures/            Figures named with question/run identifiers
+report/figures/            Experiment figures named with question/run identifiers
 docs/                     Contracts, ownership, merge and Kaggle workflow
 tests/                    Split-integrity and prediction-contract checks
 old_rubric.tex            Original supplied template; unchanged
 ```
+
+Report prose and the final PDF are maintained separately in Overleaf. Do not
+generate or upload local report sections, report build entrypoints, or PDFs.
+Use the recorded experiment code/results to support later Overleaf writing.
 
 ## Integrating independently developed work
 

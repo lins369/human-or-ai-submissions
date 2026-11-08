@@ -66,12 +66,13 @@ Original expanded candidate (already generated, so do not overwrite):
 were refit on all 10,000 supplied labels and its 3,000 test probabilities pass
 the CSV checker and saved-model reload check. It was not uploaded to Kaggle.
 
-Current report: `report/sections/q1.tex`; actual grids and refinements:
-`report/sections/q1_expanded_search.tex`. Current review PDF:
-`output/pdf/q1_results.pdf`. To regenerate figures and report source:
+Reports are written separately in Overleaf. Report prose, TeX sources, build
+entrypoints and PDFs are not part of this code PR. The actual grids and
+refinements remain in the study's JSON/CSV evidence. To regenerate only the
+experiment figures:
 
 ```sh
-.venv/bin/python -m experiments.supervised.report_expanded_q1 --prefix a_q1_expanded_20261108_v2
+.venv/bin/python -m experiments.supervised.plot_expanded_q1 --prefix a_q1_expanded_20261108_v2
 ```
 
 Use the expanded study's `cv_results.json` / `cv_results.csv` for every exact
@@ -191,7 +192,7 @@ holding classifier/settings fixed; this hypothesis has not yet been measured.
   diagnostics, fit time and local model; **no held-out score**.
 - `..._verification.json`: source/fold audits, CSV metric reconstruction,
   reload and fresh-refit checks. All validation probabilities matched exactly.
-- `report/sections/q1.tex`: English Q1.1-Q1.4; `output/pdf/q1_results.pdf`: review copy.
+- Report writing is handled separately in Overleaf, using the recorded code/results.
 - `report/figures/q1_*.png`: comparison and CV-grid figures, regenerated with
   `python -m experiments.supervised.plot_q1 --prefix a_q1_20261107_v1`.
 - `docs/lin_q1_handoff.md`: team transfer and honest AI-use notes.

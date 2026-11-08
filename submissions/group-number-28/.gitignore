@@ -22,7 +22,13 @@ cornell-tech-cs-5785-combined-2026-ai-vs-human-text/
 # Original supplied file contains an Overleaf access/share URL; keep local.
 old_rubric.tex
 old_rubric.tex.zip
-# Local PDF build intermediates; final review PDF is under output/pdf/.
+# Reports are authored separately in Overleaf. Local drafts are not uploaded.
+/output/pdf/
+/report/sections/*.tex
+/report/archive/
+/report/*.tex
+/experiments/supervised/report_expanded_q1.py
+# Local build intermediates.
 /tmp/
 report/*.aux
 report/*.log

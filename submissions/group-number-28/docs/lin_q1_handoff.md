@@ -29,9 +29,9 @@ Full settings and results are in `experiments/supervised/README.md` and
   `submissions/a_q1_expanded_20261108_v2_svm_full10000.csv`.
   Its SHA-256 matches the initial candidate because the selected SVM is
   unchanged. A duplicate upload would consume a Kaggle slot without new evidence.
-- Current report: `report/sections/q1.tex` and the four-page
-  `output/pdf/q1_results.pdf`. Search details are in
-  `report/sections/q1_expanded_search.tex`. The initial report/source is archived.
+- Report writing is handled separately in Overleaf. Local report prose, TeX
+  sources, build entrypoints and PDFs are excluded from this code PR. Exact
+  search details remain in the study's JSON/CSV files for later writing.
 - "Best" means best among tested settings, not globally optimal. Validation
   had already been inspected in v1; this is a development comparison. Bootstrap
   intervals are not selection-adjusted. No Kaggle scores informed selection,
@@ -42,7 +42,7 @@ Full settings and results are in `experiments/supervised/README.md` and
 
 ## Initial three-model study (historical record)
 
-Q1.1-Q1.4 have measured experiments and an English draft. Ownership is Lin:
+Q1.1-Q1.4 have measured experiments to support later Overleaf writing. Ownership is Lin:
 Q1/Q5; Alex: Q2/Q4; Gabriel: Q3/Q6. This work did not perform Q5 or change raw
 data, the canonical split, or teammates' experiment/report files.
 

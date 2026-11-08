@@ -37,9 +37,9 @@ records are not rewritten to point at later archive commits.
    deprecation warning with pinned NumPy; original code/hashes are retained.
    All eight selected expanded models were refit in fresh instances and matched
    their saved validation probabilities exactly in the existing environment.
-4. **Selection and reporting:** SVM remains the nominal candidate; retuned LR
+4. **Selection and handoff:** SVM remains the nominal candidate; retuned LR
    is only 0.000177 behind. Full search tables, conditional bootstrap intervals,
-   negative results, MLP seed variability and report figures are retained.
+   negative results, MLP seed variability and experiment figures are retained.
    The expanded full-data candidate is byte-identical to the baseline candidate.
    No Kaggle upload or leaderboard-based model selection occurred.
 
@@ -53,8 +53,9 @@ records are not rewritten to point at later archive commits.
   actual settings, observed metrics/timing, and probabilities aligned by ID.
 - `results/supervised/*_verification.json` and delivery/candidate checks:
   model reloads, fresh refits, metric reconstruction and output-contract checks.
-- `report/sections/q1.tex`, `q1_expanded_search.tex`, figures and review PDFs:
-  report text tied to those measured runs; the initial section/PDF is archived.
+- `report/figures/`: experiment comparison and search figures. Report prose,
+  TeX sources, build entrypoints and PDFs are maintained separately in Overleaf
+  and are excluded from the current code PR.
 - `submissions/*.metadata.json`: candidate provenance and SHA-256; the matching
   small probability CSVs are included, without raw passages or model weights.
 - `docs/lin_q1_handoff.md`: team transfer details and AI-use disclosure draft.
@@ -78,4 +79,11 @@ hypothesis, measured result and resulting decision recorded alongside the code.
 - expanded: [0936f15](https://github.com/lins369/kaggle_ai_vs_human/commit/0936f152c7f66d0a897f004a8614ae815fd314e0)
 - checks: [7640f1b](https://github.com/lins369/kaggle_ai_vs_human/commit/7640f1b5b0e90176b5b04a123f650a5ff683cbf8)
 
-The report and consolidated documentation are added in the following documentation commit. These are real archive commits created after the recorded experiments.
+Consolidated documentation was added in the following documentation commit.
+These are real archive commits created after the recorded experiments.
+That earlier commit also included local report artifacts; a later scope
+correction removes them from the current tree because report writing belongs
+in the team's separate Overleaf project. Original execution records and
+substantive experiment history remain unchanged. Historical delivery receipts
+may retain checksums of those earlier local PDFs; these are historical checks,
+not a requirement to include or regenerate reports in the code repository.
