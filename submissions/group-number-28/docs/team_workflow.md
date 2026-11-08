@@ -1,15 +1,16 @@
 # Three-person workflow
 
-Names A/B/C are temporary roles, not permanent directory names.
+Names A/B/C identify ownership; agreed members are Lin/A, Alex/B, Gabriel/C.
 
 | Role | Main report sections | Independent responsibility |
 | --- | --- | --- |
 | A (Lin) | Q1, Q5 | Supervised comparisons, tuning, early score candidates, controlled improvement |
-| B (available Sunday) | Q2, Q4 | Own baseline, learning curve, subgroup/error evaluation |
-| C (available Mon–Wed) | Q3, Q6 coordination | Own baseline, semi-supervised experiment, README/environment/reproduction |
+| B (Alex, available Sunday) | Q2, Q4 | Own baseline, learning curve, subgroup/error evaluation |
+| C (Gabriel, available Mon–Wed) | Q3, Q6 coordination | Own baseline, semi-supervised experiment, README/environment/reproduction |
 
 Everyone supplies Q0.1 contributions and their Q6.2 commit links/Q6.3 AI-use notes.
-Only A is assigned to Lin; replace B/C with agreed names. This is a proposal.
+This assignment was confirmed in planning. See `docs/lin_q1_handoff.md` for
+the current Q1 candidate and transfer files.
 
 ## Branches and integration
 

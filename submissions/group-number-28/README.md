@@ -2,8 +2,11 @@
 
 Private team repository: https://github.com/lins369/kaggle_ai_vs_human
 
-Team workspace scaffold for three independent experiment tracks and a shared,
-reproducible evaluation protocol. **The initial Q1 comparison is now archived:** three tuned models, honest held-out results, and a full-data candidate. See `experiments/supervised/README.md` and `docs/development_history.md`.
+Team workspace for three independent experiment tracks and shared evaluation.
+**Q1 is complete locally:** seven classifier families plus a representation
+control, 64 searched settings, recorded evidence, and a
+validated full-data submission candidate. Team-wide final selection and other
+questions remain in progress. See `experiments/supervised/README.md` for results.
 
 ## Quick start
 
@@ -38,7 +41,7 @@ experiments/generalization/ B: Q2 learning curves + Q4 error analysis
 experiments/semisupervised/ C: Q3 unlabeled learning
 results/<track>/<run_id>/  Per-run config, metrics, validation predictions
 submissions/               Candidate test predictions + actual upload log
-report/sections/           Report stubs organized by question Q0–Q6
+report/sections/           Report sections organized by question Q0–Q6
 report/figures/            Figures named with question/run identifiers
 docs/                     Contracts, ownership, merge and Kaggle workflow
 tests/                    Split-integrity and prediction-contract checks
@@ -61,7 +64,8 @@ python3 -m human_ai.check_predictions PATH --kind validation
 python3 -m human_ai.check_predictions PATH --kind submission
 ```
 
-Final model, environment and prediction commands will be documented after actual
-model selection. The team repository is owned by `lins369`; the owner manages
+Q1 dependencies and prediction commands are in the supervised-track README;
+team-wide final environment/pipeline remain to be integrated.
+The team repository is owned by `lins369`; the owner manages
 collaborator invitations. Inspect the course repository template before preparing
 the required final course PR. See `docs/team_workflow.md`.

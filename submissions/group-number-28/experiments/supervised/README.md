@@ -1,7 +1,97 @@
-# Initial Q1 comparison - retrospective archive
+# Supervised comparisons and controlled improvements — Q1, Q5
 
-This commit archives completed local baseline experiments with real archive dates; original execution provenance is retained unchanged.
+Owner: Lin (A). **Q1 is measured; Q5 remains a separate experiment.**
+Alex owns Q2/Q4; Gabriel owns Q3/Q6 integration.
 
+## Expanded Q1 (current, November 8)
+
+Study: `a_q1_expanded_20261108_v2_study`. Seven classifier families plus a
+representation control, **64 distinct settings / 192 candidate-fold fits**.
+All parameter choices use three training-only folds, a coarse search and one
+predeclared refinement. The original 8,000/2,000 split and original v1 evidence
+are unchanged. Settings are best among those actually tested, not global optima.
+
+| Model | Representation | Best tested settings | Validation AUROC | Fit seconds |
+|---|---|---|---:|---:|
+| Logistic regression | TF-IDF | C=33.33333333333333 | 0.943699 | 1.98 |
+| Multinomial NB | TF-IDF | alpha=0.3 | 0.905623 | 1.75 |
+| Calibrated linear SVM | TF-IDF | C=1 | **0.943876** | 6.08 |
+| Decision tree | TF-IDF | depth=15; min leaf=20 | 0.812888 | 2.76 |
+| Random forest | TF-IDF | 400 trees; unlimited depth; max_features=0.02; min leaf=1 | 0.936392 | 35.37 |
+| Histogram gradient boosting | SVD-128 | 300 rounds; rate=0.1; 15 leaves; L2=0 | 0.939490 | 5.43 |
+| Neural network / MLP | SVD-128 + scaling | hidden=(128,); alpha=0.0001; rate=0.003 | 0.939616 | 4.76 |
+| LR representation control | SVD-128 + scaling | C=0.3 | 0.922601 | 4.18 |
+
+TF-IDF settings are unchanged from v1. SVD (128 components, 7 power iterations,
+seed 42) and StandardScaler are fitted only on each applicable training fold.
+The scaled SVD LR control and MLP share a representation; boosted trees use
+the same SVD components without scaling. Comparisons with sparse models also
+change representation, so they do not isolate the classifier alone.
+
+All timings include full feature fitting and any calibration, not parameter
+search. The expanded search took 223.10 s; search plus eight final fits and
+evaluation took 297.47 s before bootstrap/secondary-seed checks. Peak process
+RSS was about 965 MiB (cumulative high-water mark, not isolated model memory).
+All runs used one CPU thread; no GPU or external weights were needed.
+
+SVM remains the Q1 candidate. Its lead over retuned LR is just 0.000177,
+paired conditional bootstrap interval [-0.000468, 0.000794]. LR is a faster
+alternative, and the difference is unresolved. All intervals omit training
+variation and model-selection correction. The original validation set was
+already inspected in v1: this extension is a development comparison, not an
+untouched final estimate. No expanded choice used Kaggle feedback.
+
+MLP uses ReLU/Adam, at most 500 epochs, internal 10% stratified stopping data,
+patience 20, tolerance 1e-4; stopping monitors accuracy. Feature transforms use
+all fitting rows, while gradient updates use 90%; its training diagnostic
+includes the internal stopping rows. Selected primary MLP stopped after 27
+epochs. Seeds 42/7/142 yield validation AUROCs 0.939616/0.936834/0.940165;
+seed 42 remains primary, without selecting the best seed. No candidate fit
+had a convergence warning. One physical-core detection warning was recorded;
+threadpool limits remained one. The original logger also emits a NumPy
+deprecation warning when recording scalar iteration counts; pinned versions
+completed correctly and all eight refits reproduced predictions exactly.
+
+For new reproduction, using the Python 3.12 environment described below:
+
+```sh
+.venv/bin/python -m unittest experiments.supervised.test_expanded_q1 -v
+.venv/bin/python -m experiments.supervised.expanded_q1 --prefix a_q1_expanded_reproduction_001
+.venv/bin/python -m experiments.supervised.verify_expanded_q1 --prefix a_q1_expanded_reproduction_001 --output results/supervised/a_q1_expanded_reproduction_001_verification.json --refit
+.venv/bin/python -m experiments.supervised.export_expanded_q1 --prefix a_q1_expanded_reproduction_001 --output submissions/a_q1_expanded_reproduction_001.csv
+```
+
+Original expanded candidate (already generated, so do not overwrite):
+`submissions/a_q1_expanded_20261108_v2_svm_full10000.csv`. Its selected settings
+were refit on all 10,000 supplied labels and its 3,000 test probabilities pass
+the CSV checker and saved-model reload check. It was not uploaded to Kaggle.
+
+Current report: `report/sections/q1.tex`; actual grids and refinements:
+`report/sections/q1_expanded_search.tex`. Current review PDF:
+`output/pdf/q1_results.pdf`. To regenerate figures and report source:
+
+```sh
+.venv/bin/python -m experiments.supervised.report_expanded_q1 --prefix a_q1_expanded_20261108_v2
+```
+
+Use the expanded study's `cv_results.json` / `cv_results.csv` for every exact
+parameter combination, `cv_progress.json` for all fold scores and stopping
+iterations, `chosen_parameters.json` for selections, `bootstrap.json` for
+uncertainty, and `mlp_secondary_seeds.json` for stability. Each of the eight
+run directories contains parameters, source/split provenance, metrics and
+canonical 2,000-row validation predictions. The audit confirms all eight fresh
+refits match saved probabilities exactly in this environment. Cross-machine
+or clean-environment reproduction remains pending.
+
+The single tree is a clear negative result here. The forest improves greatly
+over it, but costs 35.37 s without beating SVM. Boosting/MLP beat the SVD LR
+control while trailing sparse LR/SVM nominally; nonlinear modeling helps this
+representation, while information discarded by compression is a plausible
+limitation. These results do not establish that other tree, ensemble, or neural
+representations would fail. Forest tree count and boosting rounds remain at
+the largest values tested, so further resource/performance trade-offs are open.
+
+## Initial v1 results and protocol (historical record)
 
 Study: `results/supervised/a_q1_20261107_v1_study/`. The canonical split is
 unchanged: 8,000 train (4,000/class), 2,000 validation (1,000/class). All models
@@ -101,7 +191,7 @@ holding classifier/settings fixed; this hypothesis has not yet been measured.
   diagnostics, fit time and local model; **no held-out score**.
 - `..._verification.json`: source/fold audits, CSV metric reconstruction,
   reload and fresh-refit checks. All validation probabilities matched exactly.
-- `report/sections/q1.tex`: English Q1.1-Q1.4; `output/pdf/q1_results_initial_3models.pdf`: review copy.
+- `report/sections/q1.tex`: English Q1.1-Q1.4; `output/pdf/q1_results.pdf`: review copy.
 - `report/figures/q1_*.png`: comparison and CV-grid figures, regenerated with
   `python -m experiments.supervised.plot_q1 --prefix a_q1_20261107_v1`.
 - `docs/lin_q1_handoff.md`: team transfer and honest AI-use notes.

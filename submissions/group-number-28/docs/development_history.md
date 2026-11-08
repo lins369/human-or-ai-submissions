@@ -71,3 +71,11 @@ commit IDs. Do not squash away this evidence before course review.
 
 Future experiments and fixes should be committed when they happen, with the
 hypothesis, measured result and resulting decision recorded alongside the code.
+
+## Archive commits in this PR
+
+- baseline: [4696415](https://github.com/lins369/kaggle_ai_vs_human/commit/469641522e434d896d1f6afe3a240ccc664d491a)
+- expanded: [0936f15](https://github.com/lins369/kaggle_ai_vs_human/commit/0936f152c7f66d0a897f004a8614ae815fd314e0)
+- checks: [7640f1b](https://github.com/lins369/kaggle_ai_vs_human/commit/7640f1b5b0e90176b5b04a123f650a5ff683cbf8)
+
+The report and consolidated documentation are added in the following documentation commit. These are real archive commits created after the recorded experiments.
