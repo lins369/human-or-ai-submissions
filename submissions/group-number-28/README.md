@@ -3,7 +3,7 @@
 Private team repository: https://github.com/lins369/kaggle_ai_vs_human
 
 Team workspace scaffold for three independent experiment tracks and a shared,
-reproducible evaluation protocol. **No models have been trained in this scaffold.**
+reproducible evaluation protocol. **The initial Q1 comparison is now archived:** three tuned models, honest held-out results, and a full-data candidate. See `experiments/supervised/README.md` and `docs/development_history.md`.
 
 ## Quick start
 
