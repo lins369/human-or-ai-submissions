@@ -1,7 +1,95 @@
 # Supervised comparisons and controlled improvements — Q1, Q5
 
-Owner: Lin (A). **Q1 is measured; Q5 remains a separate experiment.**
+Owner: Lin (A). **Q1 and the frozen Q5 feature ablation are measured locally.**
 Alex owns Q2/Q4; Gabriel owns Q3/Q6 integration.
+
+## Q5 character-feature ablation (November 8)
+
+Study: `a_q5_20261108_v1_study`. This is a separate, prospectively frozen
+four-configuration study, not an extension of the Q1 classifier grid. All
+models retain SVM C=1, the canonical 8,000/2,000 split, and the Q1 sigmoid
+calibration protocol. No C, character range, feature weight, or classifier
+search was added after observing Q5 scores.
+
+| Configuration | Actual features | Mean training-only 3-fold AUROC | Validation AUROC | Full fit seconds |
+|---|---:|---:|---:|---:|
+| W60: original word (1,2) baseline | 60,000 | 0.936043 | 0.943876 | 5.28 |
+| C60: character (3,5) | 60,000 | 0.963434 | 0.969550 | 27.43 |
+| WC120: word + character | 120,000 | 0.964381 | **0.970006** | 33.66 |
+| W120: larger word vocabulary reference | 120,000 | 0.936876 | 0.944597 | 5.47 |
+
+All four training AUROCs are 1.0. Timings are measured in the existing Python
+3.12.7/pinned environment, with one CPU thread; they include feature fitting
+and calibration, excluding diagnostic CV. Each combination block has unit L2
+norm; equal-weight concatenation is normalized again. W60 uses the original
+single vectorizer without an extra normalization pass and exactly reproduces
+all Q1 validation probabilities (maximum absolute error 0).
+
+The predeclared primary difference WC120 minus W60 is **+0.026130**, with a
+1,000-replicate paired stratified bootstrap interval **[+0.020083, +0.031971]**.
+WC120 improves raw-margin AUROC over W60 in all three training-only folds.
+The W120 difference is +0.000721, interval [-0.000562, +0.001859]; merely
+doubling the word feature budget does not reproduce the observed character
+gain in this study. This resource reference does not strictly isolate model
+capacity. C60 already captures most of the gain: WC120 is only 0.000456 above
+C60 on validation, so superiority of the combination over character-only
+features has not been established.
+
+At threshold 0.5, WC120 corrects 107 W60 errors and introduces 34 new ones,
+reducing total errors from 258 to 185 (accuracy 0.8710 to 0.9075). Descriptive
+length bins were fixed from training-only word-count tertiles, at 174 and
+240 words. WC120 improves over W60 in all three bins. Changed-error IDs and
+probabilities are saved without passage text; passage-level causal hypotheses
+still require human review.
+
+The four saved models reproduce their recorded probabilities exactly after
+reload. Source/split/fold hashes, CV summaries, calibration and normalization
+boundaries, the primary interval, and error-change counts passed verification.
+Four Q5 tests and ten shared contract tests passed. This is verification in the
+existing environment, not an independent clean-environment reproduction.
+
+Training/evaluation/bootstrap took 146.05 seconds; the detached job including
+verification and plotting completed in about 159.26 seconds without interruption.
+Atomic per-fold/per-model checkpoints and a process lock permit identical
+unfinished studies to resume. The local worker calls no model/API service.
+Its log is `tmp/a_q5_20261108_v1.log`; job state is
+`tmp/a_q5_20261108_v1_job.json`. These operational files are ignored by Git.
+
+Fresh reproduction, using a NEW prefix:
+
+```sh
+.venv/bin/python -m unittest experiments.supervised.test_q5 -v
+.venv/bin/python -m experiments.supervised.q5_job --prefix a_q5_reproduction_001
+```
+
+Use `--resume` with the same prefix only after an interrupted identical run.
+Resume rejects changed training source, plan, environment or split and reuses
+completed folds/models. `q5_job` runs training, saved-artifact verification and
+plotting sequentially. It does not upload or fit on all 10,000 labels.
+For a separate audit, use a new output path:
+
+```sh
+.venv/bin/python -m experiments.supervised.verify_q5 --prefix a_q5_20261108_v1 --output results/supervised/a_q5_20261108_v1_additional_verification.json
+.venv/bin/python -m experiments.supervised.plot_q5 --prefix a_q5_20261108_v1
+```
+
+Evidence includes `q5_plan.json`, `cv_progress.json`, `cv_results.csv`,
+`comparison.csv`, `bootstrap.json`, `baseline_gate.json`, `changed_errors.csv`,
+`error_change_summary.json`, and `length_subgroups.csv` in the study directory;
+each model has its own config/metrics/predictions/checksum receipt. The figure
+is `report/figures/q5_a_q5_20261108_v1_comparison.png`.
+
+WC120 is the leading Q5 development candidate; C60 is a lower-dimensional
+alternative. Final team selection remains open. If selected, Alex should use
+`results/supervised/a_q5_20261108_v1_wc120/validation_predictions.csv` for Q4.
+No new full-data checkpoint, test prediction file, or Kaggle upload was created.
+The earlier word-only submission is unchanged.
+
+The validation set already informed Q1 development. All intervals condition
+on this split and fitted models, omit training variability and selection
+adjustment, and do not establish hidden-domain/test-set gains. Character
+features could also encode source shortcuts; near-duplicate/source leakage
+remains unassessed. Report prose continues to be maintained in Overleaf.
 
 ## Expanded Q1 (current, November 8)
 
@@ -34,7 +122,8 @@ evaluation took 297.47 s before bootstrap/secondary-seed checks. Peak process
 RSS was about 965 MiB (cumulative high-water mark, not isolated model memory).
 All runs used one CPU thread; no GPU or external weights were needed.
 
-SVM remains the Q1 candidate. Its lead over retuned LR is just 0.000177,
+Word-only SVM remains the Q1 candidate; the separate Q5 candidate is above.
+Its lead over retuned LR is just 0.000177,
 paired conditional bootstrap interval [-0.000468, 0.000794]. LR is a faster
 alternative, and the difference is unresolved. All intervals omit training
 variation and model-selection correction. The original validation set was
@@ -179,8 +268,9 @@ or leaderboard feedback is used for fitting or selection.
 NB is worse here, which does not establish that all NB variants are poor. Its
 independence assumptions and correlated unigram/bigram features are possible
 explanations, not tested causes. LR/SVM's train AUROC 1.0 versus validation about
-0.944 suggests a generalization gap. Q5 will test character features while
-holding classifier/settings fixed; this hypothesis has not yet been measured.
+0.944 suggests a generalization gap. Character features were still an unmeasured
+hypothesis at this Q1 stage; the separate Q5 study above now tests them while
+holding classifier/settings fixed.
 
 ## Evidence and integration
 

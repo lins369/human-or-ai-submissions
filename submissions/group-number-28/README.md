@@ -3,10 +3,12 @@
 Private team repository: https://github.com/lins369/kaggle_ai_vs_human
 
 Team workspace for three independent experiment tracks and shared evaluation.
-**Q1 is complete locally:** seven classifier families plus a representation
-control, 64 searched settings, recorded evidence, and a
-validated full-data submission candidate. Team-wide final selection and other
-questions remain in progress. See `experiments/supervised/README.md` for results.
+**Q1 and Q5 are complete locally:** Q1 covers seven classifier families plus a
+representation control and 64 searched settings. The separate frozen Q5 study
+improves validation AUROC from 0.943876 (word SVM) to 0.970006 (word + character
+SVM). The existing full-data submission is still word-only; no Q5 submission
+has been generated or uploaded. Team-wide final selection and other questions
+remain in progress. See `experiments/supervised/README.md` for results.
 
 ## Quick start
 

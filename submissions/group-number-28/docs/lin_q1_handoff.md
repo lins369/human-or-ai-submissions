@@ -1,5 +1,40 @@
 # Lin Q1 handoff
 
+## Q5 update (November 8)
+
+The prospectively frozen four-condition Q5 study is complete locally:
+`a_q5_20261108_v1_study`. SVM C=1, the canonical split and calibration protocol
+are unchanged. No adaptive parameter search followed the scores.
+
+- W60 baseline: 0.943876; C60 characters: 0.969550; WC120 combination: 0.970006;
+  W120 larger word vocabulary: 0.944597. All four train AUROCs are 1.0.
+- Primary WC120 minus W60: +0.026130, conditional paired interval
+  [+0.020083, +0.031971]; all three training-only CV folds agree in direction.
+  W60 exactly reproduces Q1 probabilities. WC120 is only 0.000456 above C60;
+  the combination has not been established as superior to character-only.
+- At threshold 0.5, 107 old errors are corrected and 34 new errors appear;
+  total validation errors fall from 258 to 185. Length-bin results and changed
+  IDs/probabilities are recorded; causal failure explanations await review.
+- WC120 is the leading Q5 development candidate; final team selection is open.
+  If adopted, Alex's Q4 input becomes
+  `results/supervised/a_q5_20261108_v1_wc120/validation_predictions.csv`.
+  The old Q1 held-out file below remains valid for that historical model.
+- Four Q5 tests and ten shared tests passed. Reloaded predictions exactly match
+  for all four models, and the primary bootstrap interval was independently
+  reconstructed from saved probabilities. Clean-environment/cross-machine
+  reproduction by Gabriel remains pending.
+- The detached local job completed training, verification and plotting in
+  about 159.26 seconds without interruption. Checkpoints can resume identical
+  unfinished steps; no external model/API service was used for training.
+- No all-10,000-label Q5 fit, test predictions, or Kaggle upload occurred. The
+  existing word-only submission must not be described as a character candidate.
+- These are development-validation results, not private/public Kaggle scores.
+  Conditional intervals omit training variation and selection adjustment;
+  source shortcuts and near-duplicate leakage remain unassessed.
+- Codex assisted with Q5 design, implementation, execution, automated checks,
+  interpretation and plotting. Lin's personal verification is not claimed;
+  review the code/results and update the AI-use disclosure with actual checks.
+
 ## Current expanded study (November 8)
 
 Q1 now covers LR, NB, SVM, decision trees, random forests, gradient boosting,
@@ -35,7 +70,7 @@ Full settings and results are in `experiments/supervised/README.md` and
 - "Best" means best among tested settings, not globally optimal. Validation
   had already been inspected in v1; this is a development comparison. Bootstrap
   intervals are not selection-adjusted. No Kaggle scores informed selection,
-  and Q5 character-feature experiments have not been performed.
+  and Q5 was not part of this Q1 study. The later Q5 results are recorded above.
 - AI also assisted with the added models, search, representation control, seed
   stability and updated report. Lin should review the disclosure below against
   Lin's actual verification; no personal team-member checks are claimed.
@@ -107,8 +142,8 @@ compare families on the fixed validation set, and retain negative results.
 Tracks run independently and exchange predictions by ID to reduce dependencies.
 SVM has the nominal best score; LR is faster and the difference is unresolved.
 
-Open questions include character-feature gains, near-duplicate/source leakage,
-cross-machine reproduction and hidden-test generalization. A minimal Q5 study
-could fix a recorded LR or SVM configuration and the canonical split, changing
-only word/character/combined representations. Collect AUROC, paired intervals,
-runtime and feature counts. This is a proposed experiment, not a measured result.
+The later Q5 study above now measures character-feature gains under the fixed
+SVM protocol, including a larger-word-vocabulary resource reference. The added
+value of combining words with characters over characters alone, near-duplicate/
+source leakage, independent reproduction and hidden-test generalization remain
+open. No extra search is needed to complete the four-condition Q5 study.

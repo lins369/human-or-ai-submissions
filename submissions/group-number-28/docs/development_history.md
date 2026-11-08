@@ -62,8 +62,9 @@ records are not rewritten to point at later archive commits.
 
 ## Scope and remaining work
 
-This is an internal Q1 PR in the private team repository. It is not the final
-course submission. Q2-Q6, team-wide final selection, and a clean-environment
+The original archive is an internal Q1 PR in the private team repository. It
+is not the final course submission. Q5 has now been measured separately as
+described below. Q2-Q4/Q6, team-wide final selection, and a clean-environment
 cross-machine reproduction remain to be integrated. Team members' personal
 verification is not claimed on their behalf. The final course PR must retain
 the substantive archive/development commits when moving into the course fork's
@@ -72,6 +73,29 @@ commit IDs. Do not squash away this evidence before course review.
 
 Future experiments and fixes should be committed when they happen, with the
 hypothesis, measured result and resulting decision recorded alongside the code.
+
+## Subsequent Q5 execution
+
+After the four-condition protocol was discussed and the user authorized its
+execution, `a_q5_20261108_v1_study` ran from commit
+`2c6f5960fa4f1d5266b8e5321a0c0cf0b18c508e` with the new Q5 files uncommitted.
+Its provenance preserves that actual dirty state, exact executing-source
+hashes and frozen snapshots. The subsequent real archive commits are
+listed below; their dates are archive dates, not earlier execution checkpoints.
+
+- Q5 implementation: [cccc067](https://github.com/lins369/kaggle_ai_vs_human/commit/cccc067bb48e8d35a13447247d13a6b513b12d7f)
+- Q5 measured evidence: [784adce](https://github.com/lins369/kaggle_ai_vs_human/commit/784adce0691d0bd8f97dbffb190dd7c4f290f66e)
+
+The fixed SVM/representation comparison records W60 0.943876, C60 0.969550,
+WC120 0.970006, and W120 0.944597. The primary WC120-W60 difference is
++0.026130, conditional paired interval [+0.020083, +0.031971]. Training-only
+folds agree in direction; the original W60 probabilities reproduce exactly.
+Four Q5 tests and ten shared tests passed, and the saved-model/metric/bootstrap
+verification passed. The detached local job finished without interruption.
+No adaptive grid, new full-data submission, or Kaggle upload was added.
+Independent reproduction, hidden-test transfer, source leakage, and the small
+WC120-C60 difference remain unresolved. Technical results/commands are in the
+supervised README; report prose remains in Overleaf.
 
 ## Archive commits in this PR
 
