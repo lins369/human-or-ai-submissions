@@ -1,25 +1,21 @@
-# Report assembly
+# Experiment figures and external report writing
 
-Keep content organized by question, not by person. Authors complete separate
-files in `sections/`; the final report includes them with LaTeX `\input`.
-Current status: section stubs only, not a completed or compiled report.
+The team writes its report in a separate Overleaf project. Do not generate or
+upload report prose, TeX section stubs, report build entrypoints, or report PDFs
+to this code repository. Later writing assistance should use the actual
+implementation, configurations and measured results.
 
-The original local `old_rubric.tex` remains unchanged. Check whether this is the
-latest course template before assembling the final report. Its threshold is
-provisional. The original template also contains an Overleaf share URL; it is
-not copied into the report stubs.
+This directory retains only experimental figures and this workflow note.
+Figures are named with question/run identifiers and refer to recorded runs.
+The expanded Q1 figures can be regenerated from existing evidence without
+fitting models or generating report text:
 
-| File | Questions | Main author |
-| --- | --- | --- |
-| sections/q0.tex | Q0.1–Q0.3 | All; A summarizes final pipeline |
-| sections/q1.tex | Q1.1–Q1.4 | A |
-| sections/q2.tex | Q2.1–Q2.3 | B |
-| sections/q3.tex | Q3.1–Q3.3 | C |
-| sections/q4.tex | Q4.1–Q4.4 | B |
-| sections/q5.tex | Q5.1–Q5.4 | A |
-| sections/q6.tex | Q6.1–Q6.3 | C coordinates; all contribute |
+```sh
+python -m experiments.supervised.plot_expanded_q1 --prefix a_q1_expanded_20261108_v2
+```
 
-Figures: `figures/q2_<name>.png` etc. Tables/results must link to actual run IDs.
-Do not replace empirical results with plans. Only report private AUROC after it
-is revealed. Final deliverables: predictions, completed PDF, and course PR URL.
+Exact grids, selected settings, metrics and uncertainty estimates are in
+`results/supervised/`; reproduction commands and dependencies are in
+`experiments/supervised/README.md`. Private AUROC is recorded only after release.
+Keep Overleaf access/share links and local report drafts outside uploaded files.
 

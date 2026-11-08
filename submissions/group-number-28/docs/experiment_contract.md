@@ -83,6 +83,8 @@ Data preparation/checking require only Python >=3.11 standard library. Each trac
 records exact tested modeling dependencies in its own `requirements.txt` once
 experiments exist, plus commands runnable from the repository root. C consolidates
 the selected final approach into root `requirements.txt` and a documented final
-training/prediction entrypoint. These do not exist yet: this scaffold is not a
-trained solution. Disclose pretrained weights and verify permission before use.
+training/prediction entrypoint. Those team-wide final files await selection;
+Q1 now provides a runnable supervised candidate in its own track, with measured
+results and a separate full-data refit. Disclose pretrained weights and verify
+permission before use.
 
