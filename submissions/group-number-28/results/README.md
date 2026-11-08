@@ -12,3 +12,11 @@ predictions; a separate full-data SVM produces the current candidate CSV.
 The verification JSON checks all selected settings, stored scores and exact
 fresh-refit reproduction. Initial v1 artifacts remain unchanged.
 
+Q5 evidence is in `supervised/a_q5_20261108_v1_*`: four frozen representation
+conditions, 12 training-only CV fits, exact reproduction of the old baseline,
+four held-out prediction files, paired bootstrap intervals, descriptive error/
+length diagnostics, and saved-model verification. WC120 validation AUROC is
+0.970006 versus W60 0.943876. This development comparison has no new full-data
+submission; final team selection and independent-environment reproduction are
+still pending. Original Q1 evidence is unchanged.
+
