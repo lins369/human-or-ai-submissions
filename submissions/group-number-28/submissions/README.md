@@ -15,7 +15,7 @@ The later six-configuration regularization follow-up selected the same WC120
 C=1 settings and exported no new candidate. The above CSV remains the incumbent
 with public AUROC 0.87399 reported in the user's screenshot; see the upload log.
 
-New unscored exploratory candidate:
+Scored exploratory candidate (public AUROC **0.87225**, user screenshot):
 `a_q5_quotes_20261108_v3_wc120_norm_full10000.csv`. It uses the fixed WC120
 SVM C=1 with quote canonicalization inside training and prediction, refit on
 all 10,000 supplied labels. It contains 3,000 verified class-1 probabilities
@@ -23,14 +23,14 @@ in original test-ID order, with exact saved-model reload agreement.
 
 This file is labeled `exploratory_robustness_tradeoff`: its source 8,000-row
 model improves the quote-change validation condition by 0.001522 while losing
-0.001331 on original text. These are development comparisons; no public/private
-gain is established. Keep the 0.87399 incumbent until an external check.
+0.001331 on original text. Its public score is 0.00174 below WC120; private
+performance is unknown. Keep the 0.87399 incumbent.
 The exporter did not upload this candidate. Its companion
 `a_q5_quotes_20261108_v3_wc120_norm_full10000.metadata.json` records the source
 study, eligibility checks, CSV/model/test hashes and the absence of a held-out
 score for the full-label refit.
 
-New four-group-study candidate:
+Scored four-group-study candidate (public AUROC **0.85812**, user screenshot):
 `a_q5_richness_20261108_v4_c60_richness_full10000.csv`. It combines the
 original C60 character TF-IDF with three document-local richness features and
 fixed, training-fitted scaling inside the complete calibrated C=1 SVM pipeline.
@@ -45,7 +45,8 @@ and contains 3,000 test probabilities in original ID order (3,001 lines with
 the header). Schema, ID, finite-probability, exact model-reload and independent
 artifact checks passed. The companion metadata records CSV/model/test hashes,
 eligibility and the source study. No held-out score belongs to the full-label
-refit, and no new Kaggle upload or score is recorded. Preserve the original
-public-0.87399 WC120 file until an external check; the earlier quote candidate
-remains a distinct exploratory tradeoff.
+refit. The later user screenshot records public AUROC 0.85812, below the
+public-0.87399 WC120 incumbent. Preserve WC120; see the
+[November 9 research note](../docs/public_score_research_20261109.md) for
+the score reversal, executed integrity/shift/stress audits and next experiments.
 

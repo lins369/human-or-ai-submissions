@@ -3,6 +3,42 @@
 Owner: Lin (A). **Q1 and the frozen Q5 feature ablation are measured locally.**
 Alex owns Q2/Q4; Gabriel owns Q3/Q6 integration.
 
+## Public-score review (November 9)
+
+The user screenshot records WC120 **0.87399**, quote WC120 **0.87225** and
+C60+richness **0.85812**. WC120 remains the public incumbent. The sections below
+preserve each study's original local evidence and export-time status. Current
+scores, executed no-refit audits and follow-up research are in
+[`docs/public_score_research_20261109.md`](../../docs/public_score_research_20261109.md).
+The reused random validation set does not establish transfer to unseen domains,
+generators or adversarial text.
+
+Weak-crop status: **executed; stopped without export as declared**.
+The [frozen protocol](../../docs/next_round_crop_protocol_20261109.md) specifies
+one 0.1-weight intervention and at most 24 SVC fits. The topic proxy failed
+quality checks, so only six fallback diagnostic random-CV fits ran. Their clean
+mean changed 0.965186 -> 0.962823, prefix mean 0.855860 -> 0.906588, and random
+screening passed. Topic, sealed-condition and calibrated-development stages
+were not promoted. See the [execution record](../../docs/q5_crop_results_20261109.md)
+and `results/supervised/a_q5_crop_20261109_v5_study/`. Current implementation is
+`crop_model.py`, `crop_topics.py`, `crop_evaluation.py` and `run_q5_crop.py`;
+machine-readable settings remain in `q5_crop_plan.json`.
+
+The user-authorized adaptive revision is also complete:
+`a_q5_crop_revised_20261109_v6_study`. Only the two challenged grouping limits
+became diagnostics; prior groups/folds/reviews stayed fixed. Matched random and
+topic CV each used six new fits. Topic prefix gain is +0.037687, with clean cost
+0.003219, narrowly beyond the unchanged 0.003 operating budget. No later-stage
+fits/export ran. [Revised results](../../docs/q5_crop_revised_results_20261109.md),
+[revision protocol](../../docs/q5_crop_revised_protocol_20261109.md) and
+`q5_crop_revised_plan.json` preserve the adaptation and uncertainty.
+
+Reproduction prerequisite: crop/stress entrypoints and full verification require
+the supplied CSVs plus the ignored local reference/model checkpoints pinned in
+their plans. A clone alone is insufficient; no fresh-clone model-level rerun is
+claimed. The revised result note records the exact `--plan` command. Numerical
+CSV evidence and frozen sources are committed separately from model binaries.
+
 ## Four-group length/richness ablation (November 8)
 
 Study: `a_q5_richness_20261108_v4_study`. This separately frozen follow-up

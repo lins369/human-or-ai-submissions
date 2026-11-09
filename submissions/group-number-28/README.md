@@ -2,6 +2,26 @@
 
 Private team repository: https://github.com/lins369/kaggle_ai_vs_human
 
+**Public-score review (November 9):** WC120 remains the incumbent at **0.87399**;
+quote normalization scored **0.87225** and C60+richness **0.85812** in the
+user-supplied screenshot. Submission integrity checks passed. New paired stress
+and data-shift diagnostics, plus a two-fit crop-training pilot, are documented in
+[`docs/public_score_research_20261109.md`](docs/public_score_research_20261109.md).
+These findings motivate stronger robustness evaluation; higher random-split
+development AUROC has not consistently transferred to the public set.
+
+The planned weak-crop follow-up has now completed under its stopping rule.
+Six diagnostic random-CV fits measured clean AUROC 0.965186 -> 0.962823 and
+prefix AUROC 0.855860 -> 0.906588. Random screening passed, but the frozen
+topic proxy failed quality checks; no later fits or candidate export occurred.
+See [the execution record](docs/q5_crop_results_20261109.md). WC120 is retained.
+
+An authorized adaptive continuation converted only the content-topic count and
+maximum held-size checks to diagnostics, reusing the exact groups/folds/reviews.
+Twelve new fits measured topic clean AUROC 0.932745 -> 0.929526 and prefix
+0.816874 -> 0.854561. The unchanged clean-loss budget was narrowly exceeded;
+no export occurred. See [the revised results](docs/q5_crop_revised_results_20261109.md).
+
 Team workspace for three independent experiment tracks and shared evaluation.
 **Q1 and Q5 are complete locally:** Q1 covers seven classifier families plus a
 representation control and 64 searched settings. The separate frozen Q5 study
@@ -23,7 +43,7 @@ completed 12 CV fits and two normalized 8,000-row models. WC120 improves from
 AUROC decreases from 0.970006 to 0.968675. A separately refit candidate is
 available at `submissions/a_q5_quotes_20261108_v3_wc120_norm_full10000.csv`,
 classified as an **exploratory robustness tradeoff**, not an established overall
-improvement. It has 3,000 verified predictions and no recorded Kaggle score;
+improvement. It has 3,000 verified predictions and public AUROC 0.87225;
 the original WC120 public score of 0.87399 remains the incumbent. Its companion
 metadata records checksums, the full-label refit and the exact source study.
 
@@ -40,7 +60,8 @@ and execution receipts are recorded separately in the study artifacts. One
 eligible full-10,000-label refit produced
 `submissions/a_q5_richness_20261108_v4_c60_richness_full10000.csv` with 3,000
 checked probabilities and exact model-reload agreement. That refit has no
-held-out evaluation and has not been uploaded to Kaggle.
+local held-out evaluation. The user's later screenshot records public AUROC
+0.85812; the original WC120 remains the incumbent.
 
 ## Quick start
 

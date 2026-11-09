@@ -219,3 +219,33 @@ in the team's separate Overleaf project. Original execution records and
 substantive experiment history remain unchanged. Historical delivery receipts
 may retain checksums of those earlier local PDFs; these are historical checks,
 not a requirement to include or regenerate reports in the code repository.
+
+## Public-score diagnosis and crop transfer archive (November 9)
+
+The user's later screenshot records quote WC120 public AUROC 0.87225 and
+C60+richness 0.85812; WC120 at 0.87399 remains the incumbent. New overlap,
+marginal-shift and paired stress diagnostics found no strong lexical duplicate
+boundary issue and measured crop/whitespace sensitivity. The crop-weight-0.5
+pilot and two separately recorded weak-crop studies preserve their own
+fitting boundaries and development limitations.
+
+The original weak-crop run stopped after six diagnostic random-CV fits when
+its fixed topic proxy failed two engineering checks. The user then authorized
+an adaptive revision making only content-topic count and maximum held-fold
+size diagnostic. The exact same topic/fold IDs and frozen reviews were reused,
+with a new exactly count-matched random control. Twelve new fits measured
+topic clean difference -0.003219 and prefix difference +0.037687. The clean
+cost narrowly exceeded the unchanged operating budget, with uncertainty
+spanning its boundary; this is a tradeoff, not a model-invalidity claim.
+
+No new candidate, Kaggle upload or canonical-2,000 evaluation was produced by
+the two weak-crop studies. Independent zero-fit verification passed. Their
+execution provenance, parent hashes and frozen snapshots remain byte-exact.
+Publication excludes passages, model binaries, caches and local report files.
+Checkpoint-dependent commands require the ignored local reference artifacts;
+a fresh-clone model-level rerun was not performed.
+
+Actual archive commits created after these experiments:
+
+- Implementation: [95fc79a](https://github.com/lins369/kaggle_ai_vs_human/commit/95fc79a8b88c56e19fab3b0615622fcbf4b9dcba)
+- Evidence: [62e2030](https://github.com/lins369/kaggle_ai_vs_human/commit/62e2030fc38f905a7e3629fccc5a20ba81e7b240)

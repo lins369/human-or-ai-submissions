@@ -1,5 +1,11 @@
 # Research notes and proposed robustness study
 
+Latest evidence: the November 9 user screenshot records quote WC120 public
+0.87225 and C60+richness 0.85812, both below WC120's 0.87399. The historical
+execution notes below retain their export-time status. See
+[the November 9 diagnosis](public_score_research_20261109.md) for actual
+submission-integrity, overlap, marginal-shift and paired stress diagnostics.
+
 Original review status: research/design only, November 8, 2026. No new training
 or submission was performed during that review. Subsequent execution is
 recorded below. This is a technical experiment-planning note, not report prose;
