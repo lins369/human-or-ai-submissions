@@ -3,6 +3,353 @@
 Owner: Lin (A). **Q1 and the frozen Q5 feature ablation are measured locally.**
 Alex owns Q2/Q4; Gabriel owns Q3/Q6 integration.
 
+## Public-score review (November 9)
+
+**Latest feedback: raw RoBERTa Public Score 0.96970**, versus previous WC120
+0.87399 (+0.09571), in the user's Kaggle screenshot. The submitted candidate
+`a_roberta_20261109_v1_raw_full10000.csv` uses a separate full 10,000-label refit;
+all 3,000 predictions and full checkpoint reload agreement pass verification.
+See the [public result and screenshot](../../docs/roberta_public_result_20261109.md).
+The prior experiment/export receipts remain unchanged historical snapshots.
+
+The subsequent contextual comparison is complete in
+`results/supervised/a_roberta_context_20261109_v1_study/`: all six frozen
+random/topic CV fits plus the canonical fit with 8,000 originals, two epochs each.
+Clean macro AUROCs are 0.996673/0.995652 versus WC120 0.965848/0.932745;
+whitespace-only means fall to 0.847715/0.862552. All 35 condition rows, unfavorable
+folds, paired intervals, ranking-error decompositions, measured costs and
+independent audits are retained. A separate zero-fit diagnostic on the fixed
+canonical checkpoint changes prefix100 AUROC 0.782456 -> 0.990948 solely by
+preserving whitespace at identical word content. See the
+[scientific results](../../docs/roberta_context_results_20261109.md),
+[diagnostic](../../docs/roberta_prefix_whitespace_results_20261109.md) and
+[frozen protocol](../../docs/roberta_context_protocol_20261109.md).
+
+Neural commands use `/opt/anaconda3/envs/python_course/bin/python`; direct tested
+packages are recorded in `requirements_roberta.txt`. Preparation reuses the
+historical saved WC120 model for inference in its original environment and
+requires the local ignored inputs. A clone alone is insufficient for a fresh
+model-level reproduction; no fresh-clone or independent-environment fit is
+claimed. Actual training commands and artifact hashes are in the study's
+`execution_receipts.json`. No calibration/blend fitting or candidate export
+occurred in this comparison.
+
+The first contextual-model device measurement is complete in
+`results/supervised/a_roberta_mps_20261109_v1/`: three FP32 RoBERTa MPS
+configurations, each with five warmup and 20 timed full training updates.
+All update/reload checks and independent evidence checks passed. This measures
+device feasibility, with no held/test score or candidate export. See the
+[device results](../../docs/roberta_mps_device_results_20261109.md) and use
+`/opt/anaconda3/envs/python_course/bin/python` for neural training.
+
+The user screenshot records WC120 **0.87399**, quote WC120 **0.87225** and
+C60+richness **0.85812**. That was the earlier WC120 public lead. The sections below
+preserve each study's original local evidence and export-time status. Current
+scores, executed no-refit audits and follow-up research are in
+[`docs/public_score_research_20261109.md`](../../docs/public_score_research_20261109.md).
+The reused random validation set does not establish transfer to unseen domains,
+generators or adversarial text.
+
+Weak-crop status: **executed; stopped without export as declared**.
+The [frozen protocol](../../docs/next_round_crop_protocol_20261109.md) specifies
+one 0.1-weight intervention and at most 24 SVC fits. The topic proxy failed
+quality checks, so only six fallback diagnostic random-CV fits ran. Their clean
+mean changed 0.965186 -> 0.962823, prefix mean 0.855860 -> 0.906588, and random
+screening passed. Topic, sealed-condition and calibrated-development stages
+were not promoted. See the [execution record](../../docs/q5_crop_results_20261109.md)
+and `results/supervised/a_q5_crop_20261109_v5_study/`. Current implementation is
+`crop_model.py`, `crop_topics.py`, `crop_evaluation.py` and `run_q5_crop.py`;
+machine-readable settings remain in `q5_crop_plan.json`.
+
+The user-authorized adaptive revision is also complete:
+`a_q5_crop_revised_20261109_v6_study`. Only the two challenged grouping limits
+became diagnostics; prior groups/folds/reviews stayed fixed. Matched random and
+topic CV each used six new fits. Topic prefix gain is +0.037687, with clean cost
+0.003219, narrowly beyond the unchanged 0.003 operating budget. No later-stage
+fits/export ran. [Revised results](../../docs/q5_crop_revised_results_20261109.md),
+[revision protocol](../../docs/q5_crop_revised_protocol_20261109.md) and
+`q5_crop_revised_plan.json` preserve the adaptation and uncertainty.
+
+Reproduction prerequisite: crop/stress entrypoints and full verification require
+the supplied CSVs plus the ignored local reference/model checkpoints pinned in
+their plans. A clone alone is insufficient; no fresh-clone model-level rerun is
+claimed. The revised result note records the exact `--plan` command. Numerical
+CSV evidence and frozen sources are committed separately from model binaries.
+
+## Four-group length/richness ablation (November 8)
+
+Study: `a_q5_richness_20261108_v4_study`. This separately frozen follow-up
+implements Route B2 after the user explicitly authorized four-group execution.
+The original split, character (3,5) TF-IDF with 60,000 features, C=1, calibration
+and seeds are unchanged. No quote normalization, C search, new split, external
+data or adaptive feature/weight search is included.
+
+| Group | Numeric blocks | Mean training-only CV AUROC | Original validation AUROC | Actual features |
+|---|---|---:|---:|---:|
+| R0: character | none | 0.963434 | 0.969550 | 60,000 |
+| R1: character + length | length | 0.963743 | 0.969825 | 60,002 |
+| R2: character + richness | richness | 0.967464 | 0.974508 | 60,003 |
+| R3: character + both | length, richness | 0.967464 | **0.974838** | 60,005 |
+
+The predeclared primary contrast **R3 minus R1** is **+0.005013**, conditional
+paired 95% interval **[+0.00200635, +0.008241825]**. Its training-only CV gains
+are positive in all three folds (mean +0.00372041). This supports incremental
+prediction from the richness block conditional on these explicit length
+features and this model geometry. It does not prove complete length
+independence or a causal authorship mechanism.
+
+Secondary contrasts: R1-R0 +0.000275, interval [-0.0005961, +0.00113635];
+R2-R0 +0.004958, interval [+0.001469775, +0.008531525]; R3-R2 +0.000330,
+interval [-0.00026605, +0.000961175]. The four-term interaction is +0.000055,
+interval [-0.000968075, +0.0011081]. Additional length features and an interaction
+are therefore not established benefits. Secondary intervals are descriptive,
+without multiplicity or selection adjustment.
+
+### Frozen features and fitting boundaries
+
+- Tokens are lowercase Unicode letter-only words, using
+  `(?u)\b[^\W\d_]+\b`; numeric/mixed/underscore tokens are excluded and
+  apostrophes split words. Character TF-IDF still receives the original text.
+- Length: `log1p(letter-token count)` and `log1p(raw Unicode character count)`.
+- Richness: moving average type-token ratio over every contiguous 50-token
+  window; Shannon unigram entropy divided by `log(token count)`; repeated
+  bigram occurrence fraction `(number of bigrams - distinct bigrams)/number
+  of bigrams`. Short MATTR documents use one window of their available tokens;
+  empty and undefined short entropy/repetition cases return zero. There are
+  no documents shorter than 50 letter tokens in either canonical partition.
+- Each numeric block has its own `StandardScaler`, fitted only inside its
+  permitted training/CV/calibration boundary, then weight `1/sqrt(d)` for its
+  dimension d. The original character block has weight 1; no final row
+  normalization is added. Expected training squared norm of a numeric block
+  is `nonconstant_columns/d`. Adding blocks changes geometry and effective
+  regularization; fixed C does not equalize capacity.
+
+The document-local features are an adaptation, not a reproduction of a
+published detector. [MATTR reference](https://doi.org/10.1080/09296171003643098)
+and [training-only preprocessing guidance](https://scikit-learn.org/1.5/common_pitfalls.html)
+inform the definitions and boundaries. These aggregate existing text rather
+than introducing an external data source. All three richness statistics can
+remain length-dependent. Training log-token-count correlations with the
+three richness features are -0.0712, -0.2404 and +0.1837; the explicit length
+block is a partial modeling control, not a complete removal of dependence.
+
+### Candidate choice and diagnostics
+
+The candidate was chosen using training-only CV **before** the validation
+matrix. R2 narrowly leads R3 by just 0.0000004095 in mean CV, so the frozen
+rule chooses R2; this near tie does not establish R2 superiority. R3 has the
+higher validation point score, but no switch based on validation was made.
+R2 minus the historical WC120 incumbent is **+0.004502**, interval
+**[+0.00103495, +0.008509275]**; its CV gains against WC120 are positive in
+two of three folds, with a mean gain of +0.00308297.
+
+| Original-text length bin | n (human / AI) | WC120 incumbent | R2 |
+|---|---:|---:|---:|
+| Short | 646 (317 / 329) | 0.961560 | 0.967150 |
+| Middle | 681 (389 / 292) | 0.971687 | 0.977022 |
+| Long | 673 (294 / 379) | 0.978291 | 0.979080 |
+
+Bins retain the original training whitespace-word-count tertiles, 174/240;
+these subgroup point gains are descriptive. R2 original/quote/dash AUROCs are
+0.974508/0.971734/0.974527. It remains quote-sensitive; the already-inspected
+typography conditions do not demonstrate independent OOD robustness.
+
+All four pipelines received three fresh raw-margin CV fits, with held margins
+and fitted scaler statistics retained. The checksum-guarded historical R0
+calibrated model was reused; three new calibrated 8,000-row models were fitted.
+Their fit times were 38.11/54.41/57.17 seconds for R1/R2/R3. Fewer columns do
+not imply faster fitting than the historical WC120 fit (33.66 seconds).
+The condition matrix includes the four groups plus WC120, each under three
+input conditions. Original Q1/Q5/tuning/quote evidence remains unchanged.
+
+R2 passed all frozen export checks: positive validation interval lower bounds
+against both R0 and WC120, CV consistency against WC120, length-bin regression
+budget 0.01 and extra typography-loss budget 0.003. These are development
+guardrails, not proof of private/public leaderboard improvement. The separate
+eligible full-label refit exports at most one CSV:
+`submissions/a_q5_richness_20261108_v4_c60_richness_full10000.csv`.
+The old public-0.87399 WC120 file remains the incumbent until an external check.
+The full-label refit completed in 67.79 seconds and exported 3,000 checked
+probabilities (3,001 lines including the header), with exact model-reload
+agreement. It has no held-out score; 0.974508 belongs to the 8,000-row model.
+No Kaggle upload occurred.
+
+Nine tests passed, including exact formulas, Unicode/short inputs, fold-only
+fitting, complete calibration boundaries, independent-process serialization
+and checkpoint reuse. The actual test stdout is archived in the study.
+Independent verification passed, reconstructing all CV AUROCs from saved held margins,
+fold scaler statistics from fitting IDs, matrix predictions, 15 AUROC intervals,
+11 contrasts, length groups, numeric diagnostics and selection/export checks.
+No full-size refits were performed by the verifier. Training/evaluation/export
+took 469.01 seconds; the job including verification and plotting took 511.50
+seconds, without interruption. All CV and new-model warning lists are empty.
+A completed-run resume check skipped all fits and overwrites.
+
+A new run uses the pinned environment, a NEW prefix, and the historical
+C60/WC120 reference checkpoints required by the frozen plan. Those model
+binaries are intentionally local and ignored by Git. A fresh clone must
+reconstruct and verify the historical references before running this follow-up;
+independent clean-environment reproduction has not yet been completed.
+
+```sh
+.venv/bin/python -m unittest experiments.supervised.test_q5_richness -v
+.venv/bin/python -m experiments.supervised.q5_richness_job --prefix a_q5_richness_reproduction_001
+```
+
+Use `--resume` only with the same prefix and unchanged source, environment,
+protocol, split and reference evidence. Atomic fold/model checkpoints are
+retained. The job runs independent verification and plotting after training.
+Figure: `report/figures/q5_a_q5_richness_20261108_v4_richness.png`.
+Source snapshots, numeric diagnostics, held margins and paired uncertainty are
+in the study directory; separate verification/delivery receipts are under
+`results/supervised/`. This remains development research on a reused validation
+set; intervals omit training variation and selection adjustment. Source/group
+leakage and hidden-domain transfer remain unresolved.
+
+## Quote canonicalization intervention (November 8)
+
+Study: `a_q5_quotes_20261108_v3_study`. The earlier interruption occurred during
+verification-code preparation, before this study started training. After
+checking the historical evidence and completing the verifier, this separate
+bounded run completed with the original 8,000/2,000 split, C=1, features,
+calibration and seeds unchanged. Its only intervention maps curly quotation
+marks/apostrophes to their ASCII equivalents during both training and prediction.
+The stateless transformer is inside the complete calibrated pipeline; dash
+handling is unchanged. The plan was frozen before v3 scores, after v2 diagnostics.
+
+| Representation / training | Original AUROC | Quote mapping | Dash mapping |
+|---|---:|---:|---:|
+| C60 / raw | 0.969550 | 0.966299 | 0.969529 |
+| C60 / quote normalized | 0.967798 | 0.967798 | 0.967816 |
+| WC120 / raw | 0.970006 | 0.967153 | 0.970036 |
+| WC120 / quote normalized | 0.968675 | 0.968675 | 0.968698 |
+
+The primary matched WC120 quote-condition difference is **+0.001522**, with a
+1,000-replicate conditional paired interval **[+0.0005494, +0.0025033]**.
+The original-text cost is **-0.001331**, interval **[-0.0026960, -0.0000022]**.
+Normalized WC120 improves quote-condition raw-margin AUROC in all three
+training-only folds; mean quote CV changes from 0.961231 to 0.962077, while
+mean clean CV falls from 0.964381 to 0.962077. The largest length-bin regression
+against the incumbent is 0.003500, in short texts. This is a measured tradeoff,
+not an across-the-board improvement or an established hidden-test gain.
+
+All 12 training-fold fits, two new calibrated 8,000-row normalized fits, and
+12 model/input-condition evaluations completed. The raw validation models were
+reused with checksum guards, and their fresh CV clean scores reproduce v1.
+Quote mapping changes 157 validation texts; dash mapping changes 177. Equal
+raw/quote predictions for normalized models follow by construction. Dash was
+already inspected in v2 and is an additional diagnostic, not a new holdout.
+Intervals condition on this development split and fitted models and omit
+training variability and selection adjustment.
+
+WC120 normalized passed the predeclared **exploratory** export checks against
+the incumbent: positive quote-interval lower bound, consistent quote CV gains,
+clean point/CV losses within 0.003, length-bin losses within 0.01, and extra
+dash loss within 0.005. The 0.003 budget is a practical exploratory preference,
+not a statistical noninferiority margin. C60 normalized failed the clean-CV
+budget and quote-interval check against the incumbent. At most one candidate
+was permitted, with WC120 first in priority.
+
+The eligible `exploratory_robustness_tradeoff` candidate was refit on all 10,000
+labels and exported to
+`submissions/a_q5_quotes_20261108_v3_wc120_norm_full10000.csv`: 3,000 test
+probabilities, `id,label`, 3,001 lines including the header. Its full-label model
+has no held-out score; 0.968675 belongs to the separate 8,000-row model. Reload
+predictions match exactly. No Kaggle upload occurred, and the existing
+public-0.87399 WC120 submission remains the incumbent pending an external check.
+
+Five tests passed, covering the mapping, calibration/fold boundaries,
+independent-process serialization and checkpoint reuse. The independent
+artifact verifier reconstructed source/split/fold hashes, all matrix predictions,
+bootstrap intervals, length bins, eligibility and full-label export; all checks
+passed. Original Q1/Q5 evidence is unchanged. Training/evaluation/export took
+346.71 seconds; the full job with verification and plotting took 379.63 seconds.
+The completed-run `--resume` check skipped all fits and overwrites. Figure:
+`report/figures/q5_a_q5_quotes_20261108_v3_quotes.png`.
+
+Fresh reproduction uses a NEW prefix and the pinned environment:
+
+```sh
+.venv/bin/python -m unittest experiments.supervised.test_q5_quotes -v
+.venv/bin/python -m experiments.supervised.q5_quotes_job --prefix a_q5_quotes_reproduction_001
+```
+
+Use the same prefix plus `--resume` only for identical interrupted settings.
+The driver runs training, independent verification and plotting sequentially;
+checkpoints reject changed source, protocol, split or reference evidence.
+The study directory retains the frozen plan/source snapshots, CV progress,
+comparison, predictions, bootstrap and selection. Separate verification and
+delivery receipts are in `results/supervised/`; postprocessing source hashes,
+test results and runtime summary are retained in the study directory.
+
+## Bounded Q5 regularization follow-up (November 8)
+
+Study: `a_q5_tuned_20261108_v2_study`. After the two user-reported public
+scores (W60 0.85157; WC120 0.87399), a separate six-configuration protocol
+compared C60/WC120 with SVM C in {0.1, 1, 10}. It preserved the canonical split,
+features, seeds and calibration. The original Q5 plan/evidence were not changed.
+
+| Representation | Mean training-only CV, C=0.1 | C=1 | C=10 |
+|---|---:|---:|---:|
+| C60 character | 0.956520 | **0.963434** | 0.960097 |
+| WC120 word + character | 0.953765 | **0.964381** | 0.962976 |
+
+All 18 candidate-fold fits completed. Features were fitted independently in
+each of six representation/fold boundaries and cached only across the three
+C values within that boundary. Each representation selected C=1 from training
+CV before finalist validation. Both finalists were freshly fitted on 8,000
+rows; validation AUROCs 0.969550/0.970006 exactly reproduce the old C60/WC120
+probabilities in this environment. C60 minus WC120 is -0.000456, with a
+conditional paired interval [-0.002611, +0.001900]; no clear superiority is
+established. Independent-machine reproduction is still pending.
+
+No new candidate passed the predeclared export rules. WC120 C=1 is the same
+configuration as the existing submission, and C60 did not improve CV or have a
+positive-lower-bound paired validation difference. The existing public-0.87399
+WC120 CSV remains the incumbent; this follow-up made no new test predictions,
+full-label refit, CSV export or Kaggle upload.
+
+The fixed-model typography diagnostic measured:
+
+| Representation | Original AUROC | Quote mapping | Dash mapping |
+|---|---:|---:|---:|
+| C60 C=1 | 0.969550 | 0.966299 | 0.969529 |
+| WC120 C=1 | 0.970006 | 0.967153 | 0.970036 |
+
+Quote mapping changed 157/2,000 documents (91 human, 66 AI); dash mapping
+changed 177 (82 human, 95 AI). At threshold 0.5, quote mapping flipped 21 C60
+and 15 WC120 decisions; dash mapping flipped none. These are observed local
+sensitivities, not significance claims or proof of the public-gap mechanism.
+Only evaluation text was changed in v2; the separate v3 intervention above
+subsequently evaluated normalized training.
+Formatting predictions and changed-subset diagnostics retain original IDs.
+
+Five new tests passed (three tuning/selection/resume tests and two sensitivity
+tests). The independent verifier reconstructed all CV summaries, source/split
+guards, finalist probabilities, bootstrap intervals, nine typography conditions,
+length diagnostics and export eligibility; all checks passed. The detached
+job completed training/diagnostics in 155.98 seconds and all postprocessing in
+174.30 seconds without interruption.
+
+Fresh reproduction, with a NEW prefix:
+
+```sh
+.venv/bin/python -m unittest experiments.supervised.test_q5_tune experiments.supervised.test_q5_sensitivity -v
+.venv/bin/python -m experiments.supervised.q5_tune_job --prefix a_q5_tuned_reproduction_001
+```
+
+`--resume` continues identical unfinished settings and rejects changed source,
+protocol or reference evidence. It never expands the C grid. An eligible future
+reproduction can export at most one candidate, after local selection, but never
+uploads it. See `q5_tuning_plan.json` for the exact export guardrails, tie rules
+and selection-adjustment limitations. The comparison figure is
+`report/figures/q5_a_q5_tuned_20261108_v2_tuning.png`.
+
+The measured quote sensitivity motivated the separate v3 train-and-infer
+canonicalization ablation above. It did not establish that canonicalization
+improves clean or hidden-test performance. No second intervention was added to
+this bounded v2 run, and report prose remains in Overleaf.
+
 ## Q5 character-feature ablation (November 8)
 
 Study: `a_q5_20261108_v1_study`. This is a separate, prospectively frozen
@@ -82,8 +429,39 @@ is `report/figures/q5_a_q5_20261108_v1_comparison.png`.
 WC120 is the leading Q5 development candidate; C60 is a lower-dimensional
 alternative. Final team selection remains open. If selected, Alex should use
 `results/supervised/a_q5_20261108_v1_wc120/validation_predictions.csv` for Q4.
-No new full-data checkpoint, test prediction file, or Kaggle upload was created.
-The earlier word-only submission is unchanged.
+The four-condition study itself created no full-data checkpoint or test
+predictions. A separate post-study export is now available as described below;
+the earlier word-only submission and all 8,000-row study artifacts are unchanged.
+
+### Separate Q5 Kaggle candidate
+
+After the user requested a file for manual Kaggle scoring, the selected WC120
+configuration was refit on all 10,000 supplied labels, with no additional search.
+The 60k word and 60k character budgets, equal-block/global L2 normalization,
+SVM C=1 and training-only sigmoid calibration remain fixed.
+
+- CSV: `submissions/a_q5_20261108_v1_wc120_full10000.csv`.
+- Artifact directory: `results/supervised/a_q5_20261108_v1_wc120_full10000/`.
+- Training order: canonical 8,000 training IDs followed by 2,000 validation IDs.
+- Fit time: 41.49 seconds; full export/checks: 55.41 seconds, one CPU thread.
+- Exactly 3,000 unique test IDs in original order, `id,label`, class-1 probabilities.
+- Saved-model reload probabilities match exactly; original held-out artifacts
+  are unchanged. Schema/ID/probability and checksum verification passed.
+- No convergence warnings or Kaggle upload occurred. This full-label refit
+  has no held-out evaluation; 0.970006 belongs to the original 8,000-row model.
+
+Metadata records the CSV/model/test/export-code hashes and refit provenance.
+The model binary remains local and ignored by Git. Regenerate after a fresh Q5
+study with a NEW output path:
+
+```sh
+.venv/bin/python -m experiments.supervised.export_q5 --prefix a_q5_reproduction_001 --model wc120 --output submissions/a_q5_reproduction_001_wc120_full10000.csv
+.venv/bin/python -m human_ai.check_predictions submissions/a_q5_reproduction_001_wc120_full10000.csv --kind submission
+```
+
+Use `--resume` only to continue identical interrupted export settings. The
+exporter rejects changed training source/settings/environment and never fits
+features to test passages or overwrites completed candidates.
 
 The validation set already informed Q1 development. All intervals condition
 on this split and fitted models, omit training variability and selection
