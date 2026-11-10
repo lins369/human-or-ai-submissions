@@ -5,8 +5,45 @@ Alex owns Q2/Q4; Gabriel owns Q3/Q6 integration.
 
 ## Public-score review (November 9)
 
+**Latest feedback: raw RoBERTa Public Score 0.96970**, versus previous WC120
+0.87399 (+0.09571), in the user's Kaggle screenshot. The submitted candidate
+`a_roberta_20261109_v1_raw_full10000.csv` uses a separate full 10,000-label refit;
+all 3,000 predictions and full checkpoint reload agreement pass verification.
+See the [public result and screenshot](../../docs/roberta_public_result_20261109.md).
+The prior experiment/export receipts remain unchanged historical snapshots.
+
+The subsequent contextual comparison is complete in
+`results/supervised/a_roberta_context_20261109_v1_study/`: all six frozen
+random/topic CV fits plus the canonical fit with 8,000 originals, two epochs each.
+Clean macro AUROCs are 0.996673/0.995652 versus WC120 0.965848/0.932745;
+whitespace-only means fall to 0.847715/0.862552. All 35 condition rows, unfavorable
+folds, paired intervals, ranking-error decompositions, measured costs and
+independent audits are retained. A separate zero-fit diagnostic on the fixed
+canonical checkpoint changes prefix100 AUROC 0.782456 -> 0.990948 solely by
+preserving whitespace at identical word content. See the
+[scientific results](../../docs/roberta_context_results_20261109.md),
+[diagnostic](../../docs/roberta_prefix_whitespace_results_20261109.md) and
+[frozen protocol](../../docs/roberta_context_protocol_20261109.md).
+
+Neural commands use `/opt/anaconda3/envs/python_course/bin/python`; direct tested
+packages are recorded in `requirements_roberta.txt`. Preparation reuses the
+historical saved WC120 model for inference in its original environment and
+requires the local ignored inputs. A clone alone is insufficient for a fresh
+model-level reproduction; no fresh-clone or independent-environment fit is
+claimed. Actual training commands and artifact hashes are in the study's
+`execution_receipts.json`. No calibration/blend fitting or candidate export
+occurred in this comparison.
+
+The first contextual-model device measurement is complete in
+`results/supervised/a_roberta_mps_20261109_v1/`: three FP32 RoBERTa MPS
+configurations, each with five warmup and 20 timed full training updates.
+All update/reload checks and independent evidence checks passed. This measures
+device feasibility, with no held/test score or candidate export. See the
+[device results](../../docs/roberta_mps_device_results_20261109.md) and use
+`/opt/anaconda3/envs/python_course/bin/python` for neural training.
+
 The user screenshot records WC120 **0.87399**, quote WC120 **0.87225** and
-C60+richness **0.85812**. WC120 remains the public incumbent. The sections below
+C60+richness **0.85812**. That was the earlier WC120 public lead. The sections below
 preserve each study's original local evidence and export-time status. Current
 scores, executed no-refit audits and follow-up research are in
 [`docs/public_score_research_20261109.md`](../../docs/public_score_research_20261109.md).

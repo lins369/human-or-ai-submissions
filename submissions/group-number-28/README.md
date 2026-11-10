@@ -2,9 +2,22 @@
 
 Private team repository: https://github.com/lins369/kaggle_ai_vs_human
 
-**Public-score review (November 9):** WC120 remains the incumbent at **0.87399**;
-quote normalization scored **0.87225** and C60+richness **0.85812** in the
-user-supplied screenshot. Submission integrity checks passed. New paired stress
+**Latest public result (November 9): RoBERTa reaches 0.96970**, up **0.09571**
+from the previous WC120 score of 0.87399, according to the user-supplied Kaggle
+screenshot. The submitted file is
+[`a_roberta_20261109_v1_raw_full10000.csv`](submissions/a_roberta_20261109_v1_raw_full10000.csv).
+It uses the fixed raw-text RoBERTa-base recipe refit on all 10,000 labels, with
+all 3,000 test IDs/probabilities and full saved-model reload agreement verified.
+See the [score and screenshot](docs/roberta_public_result_20261109.md),
+[seven-fit comparison](docs/roberta_context_results_20261109.md) and
+[whitespace diagnostic](docs/roberta_prefix_whitespace_results_20261109.md).
+Private-score transfer remains unknown; the raw model's format sensitivity is
+preserved in the evidence. Neural fitting uses `python_course` on M4 Pro.
+
+The following paragraphs retain the earlier classical-model stages. At the
+first public-score review, WC120 led at **0.87399**; quote normalization scored
+**0.87225** and C60+richness **0.85812** in the user-supplied screenshot.
+Submission integrity checks passed. Paired stress
 and data-shift diagnostics, plus a two-fit crop-training pilot, are documented in
 [`docs/public_score_research_20261109.md`](docs/public_score_research_20261109.md).
 These findings motivate stronger robustness evaluation; higher random-split
@@ -14,7 +27,7 @@ The planned weak-crop follow-up has now completed under its stopping rule.
 Six diagnostic random-CV fits measured clean AUROC 0.965186 -> 0.962823 and
 prefix AUROC 0.855860 -> 0.906588. Random screening passed, but the frozen
 topic proxy failed quality checks; no later fits or candidate export occurred.
-See [the execution record](docs/q5_crop_results_20261109.md). WC120 is retained.
+See [the execution record](docs/q5_crop_results_20261109.md). That stage retained WC120.
 
 An authorized adaptive continuation converted only the content-topic count and
 maximum held-size checks to diagnostics, reusing the exact groups/folds/reviews.
@@ -34,7 +47,7 @@ selection and other questions remain in progress. See
 
 A separate six-configuration C60/WC120 regularization follow-up selected the
 original C=1 for both representations. It produced no replacement candidate;
-the existing Q5 submission remains the incumbent. Measured quote/dash
+that stage retained the existing Q5 submission. Measured quote/dash
 sensitivity and the negative tuning result are retained for error analysis.
 
 The later quote-canonicalization study, `a_q5_quotes_20261108_v3_study`,
@@ -44,7 +57,7 @@ AUROC decreases from 0.970006 to 0.968675. A separately refit candidate is
 available at `submissions/a_q5_quotes_20261108_v3_wc120_norm_full10000.csv`,
 classified as an **exploratory robustness tradeoff**, not an established overall
 improvement. It has 3,000 verified predictions and public AUROC 0.87225;
-the original WC120 public score of 0.87399 remains the incumbent. Its companion
+the original WC120 public score of 0.87399 led that comparison. Its companion
 metadata records checksums, the full-label refit and the exact source study.
 
 The four-group length/richness study, `a_q5_richness_20261108_v4_study`,
@@ -55,13 +68,14 @@ explicit length adjustment is +0.005013, conditional paired 95% interval
 [+0.00200635, +0.008241825], with positive gains in all three training folds.
 The training-CV-selected character+richness model exceeds the old WC120
 validation score by 0.004502. These are development findings, not new public
-scores; the public-0.87399 submission remains the incumbent. Export eligibility
+scores; that stage retained the public-0.87399 submission. Export eligibility
 and execution receipts are recorded separately in the study artifacts. One
 eligible full-10,000-label refit produced
 `submissions/a_q5_richness_20261108_v4_c60_richness_full10000.csv` with 3,000
 checked probabilities and exact model-reload agreement. That refit has no
 local held-out evaluation. The user's later screenshot records public AUROC
-0.85812; the original WC120 remains the incumbent.
+0.85812, below WC120. RoBERTa's later 0.96970 result is the current public leader
+among the repository's reported submissions.
 
 ## Quick start
 

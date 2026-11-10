@@ -1,5 +1,23 @@
 # Lin Q1 handoff
 
+## Latest RoBERTa result (November 9)
+
+Raw RoBERTa-base, refit on all 10,000 supplied labels, now has a user-reported
+Kaggle Public Score of 0.96970 (+0.09571 versus WC120 0.87399). The screenshot,
+CSV hash, actual seven-fit comparison, whitespace diagnostic and full-refit
+verification are linked in [the public-result note](roberta_public_result_20261109.md).
+The submission is `submissions/a_roberta_20261109_v1_raw_full10000.csv`.
+This is the current reported public leader; the older study-time incumbent
+statements below are historical. Private-score gains are not observed.
+
+For held-out analysis, use the separate 8,000-trained model's predictions at
+`results/supervised/a_roberta_context_20261109_v1_study/fits/canonical_8000/validation_predictions.csv`.
+The full 10,000-label refit has no held-out score. Neural work uses
+`/opt/anaconda3/envs/python_course/bin/python`; the measured recipe, hashes and
+actual commands are archived with the results. Raw passages, pretrained caches
+and fitted checkpoints remain local; original whitespace is preserved in the
+submitted model's training and prediction.
+
 ## Four-group length/richness ablation (November 8)
 
 `a_q5_richness_20261108_v4_study` measured the authorized second-round
