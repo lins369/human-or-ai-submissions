@@ -37,3 +37,9 @@ report/*.fls
 report/*.fdb_latexmk
 report/*.synctex.gz
 
+
+# Generated final-pipeline environments, models, and predictions.
+.venv-*/
+/artifacts/
+/submission.csv
+*.safetensors
