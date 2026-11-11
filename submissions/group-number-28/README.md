@@ -1,143 +1,198 @@
-# kaggle_ai_vs_human — Cornell Tech (2026)
+# Group Number 28 — Human or AI?
 
-Private team repository: https://github.com/lins369/kaggle_ai_vs_human
+Cornell Tech · Applied Machine Learning · Kaggle competition code submission.
 
-**Latest public result (November 9): RoBERTa reaches 0.96970**, up **0.09571**
-from the previous WC120 score of 0.87399, according to the user-supplied Kaggle
-screenshot. The submitted file is
-[`a_roberta_20261109_v1_raw_full10000.csv`](submissions/a_roberta_20261109_v1_raw_full10000.csv).
-It uses the fixed raw-text RoBERTa-base recipe refit on all 10,000 labels, with
-all 3,000 test IDs/probabilities and full saved-model reload agreement verified.
-See the [score and screenshot](docs/roberta_public_result_20261109.md),
-[seven-fit comparison](docs/roberta_context_results_20261109.md) and
-[whitespace diagnostic](docs/roberta_prefix_whitespace_results_20261109.md).
-Private-score transfer remains unknown; the raw model's format sensitivity is
-preserved in the evidence. Neural fitting uses `python_course` on M4 Pro.
+| Team member | NetID | Main work |
+| --- | --- | --- |
+| Yousen Lin | yl4358 | Q1 supervised comparisons; Q5 improvements; final RoBERTa pipeline |
+| Alexander Yen | ay476 | Q2 learning curves; Q4 generalization and error analysis |
+| Gabriel Draghici | gpd42 | Q3 semi-supervised learning; Q6 integration |
 
-The following paragraphs retain the earlier classical-model stages. At the
-first public-score review, WC120 led at **0.87399**; quote normalization scored
-**0.87225** and C60+richness **0.85812** in the user-supplied screenshot.
-Submission integrity checks passed. Paired stress
-and data-shift diagnostics, plus a two-fit crop-training pilot, are documented in
-[`docs/public_score_research_20261109.md`](docs/public_score_research_20261109.md).
-These findings motivate stronger robustness evaluation; higher random-split
-development AUROC has not consistently transferred to the public set.
+Kaggle team name: **Group Number 28**. Course submission directory:
+`submissions/group-number-28/`.
 
-The planned weak-crop follow-up has now completed under its stopping rule.
-Six diagnostic random-CV fits measured clean AUROC 0.965186 -> 0.962823 and
-prefix AUROC 0.855860 -> 0.906588. Random screening passed, but the frozen
-topic proxy failed quality checks; no later fits or candidate export occurred.
-See [the execution record](docs/q5_crop_results_20261109.md). That stage retained WC120.
+The final prediction pipeline fine-tunes RoBERTa-base on the original text,
+preserving whitespace. The source run used two epochs and seed 42. The reported
+Kaggle public AUROC was **0.96970**; this is a historical leaderboard result,
+not a guarantee for a new fit. Classical supervised comparisons, ablations,
+semi-supervised experiments, and the Q2/Q4 notebook are retained alongside the
+final entrypoints. See [development history](DEVELOPMENT_HISTORY.md) and
+[AI disclosure](AI_DISCLOSURE.md). The packaging checks and their scope are
+recorded in [verification](VERIFICATION.md).
 
-An authorized adaptive continuation converted only the content-topic count and
-maximum held-size checks to diagnostics, reusing the exact groups/folds/reviews.
-Twelve new fits measured topic clean AUROC 0.932745 -> 0.929526 and prefix
-0.816874 -> 0.854561. The unchanged clean-loss budget was narrowly exceeded;
-no export occurred. See [the revised results](docs/q5_crop_revised_results_20261109.md).
+## Final pipeline: install and prepare data
 
-Team workspace for three independent experiment tracks and shared evaluation.
-**Q1 and Q5 are complete locally:** Q1 covers seven classifier families plus a
-representation control and 64 searched settings. The separate frozen Q5 study
-improves validation AUROC from 0.943876 (word SVM) to 0.970006 (word + character
-SVM). A separate full-10,000-label Q5 candidate is now available at
-`submissions/a_q5_20261108_v1_wc120_full10000.csv`, with validated test IDs and
-probabilities. The scripts have not uploaded it to Kaggle. Team-wide final
-selection and other questions remain in progress. See
-`experiments/supervised/README.md` for results and reproduction commands.
-
-A separate six-configuration C60/WC120 regularization follow-up selected the
-original C=1 for both representations. It produced no replacement candidate;
-that stage retained the existing Q5 submission. Measured quote/dash
-sensitivity and the negative tuning result are retained for error analysis.
-
-The later quote-canonicalization study, `a_q5_quotes_20261108_v3_study`,
-completed 12 CV fits and two normalized 8,000-row models. WC120 improves from
-0.967153 to 0.968675 on the quote-change condition while its original-text
-AUROC decreases from 0.970006 to 0.968675. A separately refit candidate is
-available at `submissions/a_q5_quotes_20261108_v3_wc120_norm_full10000.csv`,
-classified as an **exploratory robustness tradeoff**, not an established overall
-improvement. It has 3,000 verified predictions and public AUROC 0.87225;
-the original WC120 public score of 0.87399 led that comparison. Its companion
-metadata records checksums, the full-label refit and the exact source study.
-
-The four-group length/richness study, `a_q5_richness_20261108_v4_study`,
-retains the original split, character features, C=1 and calibration. Validation
-AUROCs are 0.969550 (characters), 0.969825 (+length), 0.974508 (+richness),
-and 0.974838 (+length+richness). The primary increment from richness after
-explicit length adjustment is +0.005013, conditional paired 95% interval
-[+0.00200635, +0.008241825], with positive gains in all three training folds.
-The training-CV-selected character+richness model exceeds the old WC120
-validation score by 0.004502. These are development findings, not new public
-scores; that stage retained the public-0.87399 submission. Export eligibility
-and execution receipts are recorded separately in the study artifacts. One
-eligible full-10,000-label refit produced
-`submissions/a_q5_richness_20261108_v4_c60_richness_full10000.csv` with 3,000
-checked probabilities and exact model-reload agreement. That refit has no
-local held-out evaluation. The user's later screenshot records public AUROC
-0.85812, below WC120. RoBERTa's later 0.96970 result is the current public leader
-among the repository's reported submissions.
-
-## Quick start
-
-Data utilities require Python >=3.11 and no third-party packages.
-
-1. Obtain the five original competition CSVs and put them in `data/raw/`.
-   The existing competition-named local directory is also supported, unchanged.
-2. From this repository root run:
-
-   ```sh
-   python3 -m human_ai.prepare_data
-   python3 -m unittest discover -s tests -v
-   ```
-
-3. Read `docs/experiment_contract.md`, then start in your experiment directory.
-   Add modeling dependencies with exact tested versions when you run experiments.
-
-Preparation verifies the committed 8,000/2,000 stratified split and creates local
-raw-text CSVs under `data/processed/`. Git tracks IDs and hashes, not passages.
-It never silently overwrites canonical split files. Use the held-out partition
-for comparisons; only after selection may final training use all 10,000 labels.
-
-## Layout
-
-```text
-data/raw/                  Original CSVs; ignored by Git
-data/splits/               Committed train/validation IDs + source/split hashes
-data/processed/            Recreated train/validation CSVs; ignored by Git
-human_ai/                  Shared split loading, preparation, prediction checks
-experiments/supervised/    A: Q1 model comparisons + Q5 improvements
-experiments/generalization/ B: Q2 learning curves + Q4 error analysis
-experiments/semisupervised/ C: Q3 unlabeled learning
-results/<track>/<run_id>/  Per-run config, metrics, validation predictions
-submissions/               Candidate test predictions + actual upload log
-report/figures/            Experiment figures named with question/run identifiers
-docs/                     Contracts, ownership, merge and Kaggle workflow
-tests/                    Split-integrity and prediction-contract checks
-old_rubric.tex            Original supplied template; unchanged
-```
-
-Report prose and the final PDF are maintained separately in Overleaf. Do not
-generate or upload local report sections, report build entrypoints, or PDFs.
-Use the recorded experiment code/results to support later Overleaf writing.
-
-## Integrating independently developed work
-
-Share only input IDs and output contracts; models do not need the same classes.
-Each member must be able to train and export predictions independently. Combine
-predictions by ID, never by row position. Use small PRs and preserve meaningful
-intermediate commits. C coordinates final reproducibility/README; each member
-writes their own report sections and contribution/AI-use notes.
-
-Validation output: `id,label,p_ai` (true label plus AI probability). Kaggle output:
-`id,label` (label column contains AI probability). Verify both with:
+All commands below start in `submissions/group-number-28/`, the directory
+containing this README. Python **3.11** is the neural environment; the source
+experiments used Python 3.11.15. Create an isolated environment:
 
 ```sh
-python3 -m human_ai.check_predictions PATH --kind validation
-python3 -m human_ai.check_predictions PATH --kind submission
+python3.11 -m venv .venv-final
+source .venv-final/bin/activate
+python -m pip install -r requirements-final.txt
 ```
 
-Q1 dependencies and prediction commands are in the supervised-track README;
-team-wide final environment/pipeline remain to be integrated.
-The team repository is owned by `lins369`; the owner manages
-collaborator invitations. Inspect the course repository template before preparing
-the required final course PR. See `docs/team_workflow.md`.
+Download the original competition files from Kaggle and place them in
+`data/raw/`. The final pipeline needs `train.csv` and `test.csv`; Q3 additionally
+needs `unlabeled.csv`. Data and trained model weights are not included in Git.
+Use the original CSVs without rewriting or normalizing them: the canonical
+split loader checks the original training-file hash.
+
+```sh
+python -m human_ai.prepare_data
+```
+
+This verifies the committed split IDs in `data/splits/` and materializes local
+`data/processed/train.csv` and `data/processed/validation.csv`. The split contains
+8,000 training rows and 2,000 validation rows, balanced by class, using seed 42.
+The committed IDs and manifest are authoritative; preparation does not replace
+an existing split.
+
+The first model run downloads the public
+[`FacebookAI/roberta-base`](https://huggingface.co/FacebookAI/roberta-base)
+checkpoint at revision `e2da8e2f811d1448a5b465c236feacd80ffbac7b`. Internet access
+is needed for that download unless the revision is already cached. Subsequent
+offline runs can pass `--local-files-only`. Fine-tuning requires enough memory
+for RoBERTa-base and its optimizer. `--device auto` selects CUDA, then Apple MPS,
+then CPU; `--device cpu`, `--device mps`, and `--device cuda` select explicitly.
+CPU execution is supported but slower. The original final model used Apple MPS
+in FP32. Device and library differences can change fitted weights and scores;
+cross-device bitwise agreement is not promised.
+
+## Train and evaluate on the labeled validation split
+
+```sh
+python train.py --output-dir artifacts/roberta-validation
+```
+
+This fits only the canonical 8,000 training rows and evaluates on the 2,000
+held-out validation rows after the final epoch. It writes
+`artifacts/roberta-validation/validation_predictions.csv` with `id,label,p_ai`,
+and `artifacts/roberta-validation/metrics.json` with the validation results.
+The fitted model is saved below `artifacts/roberta-validation/model/`; the
+completed run has a `completion.json` marker. Validate the prediction contract:
+
+```sh
+python -m human_ai.check_predictions artifacts/roberta-validation/validation_predictions.csv --kind validation
+```
+
+The fixed default recipe is:
+
+| Setting | Value |
+| --- | --- |
+| Input | Original text, including whitespace; right truncation at 512 tokens |
+| Seed | 42 |
+| Epochs | 2 |
+| Microbatch / gradient accumulation | 4 / 4; effective batch size 16 |
+| Optimizer | AdamW; learning rate 0.00002; weight decay 0.01 |
+| Learning-rate schedule | Constant; no warmup |
+| Gradient clipping | Maximum norm 1.0 |
+| Precision | FP32 |
+
+Use new output directories for separate runs so their artifacts remain distinct.
+The final entrypoints are independent of historical study receipts and local
+research checkpoints.
+
+## Refit on all labels and write submission.csv
+
+After selecting the recipe, fit a separate model on all 10,000 supplied labeled
+rows and predict the 3,000 test rows:
+
+```sh
+python train.py --full-data --output-dir artifacts/roberta-full
+python predict.py --model-dir artifacts/roberta-full --output submission.csv
+python -m human_ai.check_predictions submission.csv --kind submission
+```
+
+Pass the run directory to `--model-dir`, not its nested `model/` directory.
+`submission.csv` has columns `id,label`; `label` is the probability of AI
+authorship, class 1, rather than a thresholded class. The full-data fit has no
+independent validation score. These commands generate the Kaggle file locally;
+upload it through Kaggle separately.
+
+## Historical classical experiments: Q1 and Q5
+
+The original classical models used a separate Python **3.12** environment.
+Keep its pinned NumPy and scikit-learn versions separate from the neural
+environment, especially when reading saved models.
+
+```sh
+python3.12 -m venv .venv-classical
+.venv-classical/bin/python -m pip install -r experiments/supervised/requirements.txt
+.venv-classical/bin/python -m human_ai.prepare_data
+.venv-classical/bin/python -m experiments.supervised.expanded_q1 --prefix a_q1_course_reproduction_001
+.venv-classical/bin/python -m experiments.supervised.q5_job --prefix a_q5_course_reproduction_001
+```
+
+Detailed grids, study-specific seeds/configurations, and other commands are in
+[`experiments/supervised/README.md`](experiments/supervised/README.md) and the
+adjacent JSON plans. Some frozen crop, stress, and RoBERTa research scripts
+deliberately depend on ignored local reference models, cached snapshots, source
+hashes, or old run receipts. Their archived evidence documents the original
+experiments; those scripts are not the independent final training/prediction
+entrypoints above. A fresh clone does not recreate those historical prerequisites
+automatically.
+
+## Semi-supervised experiments: Q3
+
+Q3 uses its recorded Python **3.13** environment, seed **20261109**, the canonical
+8,000/2,000 split, and `data/raw/unlabeled.csv`. From this team directory:
+
+```sh
+python3.13 -m venv .venv-q3
+.venv-q3/bin/python -m pip install -r experiments/semisupervised/requirements.txt
+.venv-q3/bin/python -m human_ai.prepare_data
+.venv-q3/bin/python -m experiments.semisupervised.run_q3 --prefix c_q3_course_reproduction_001
+.venv-q3/bin/python -m experiments.semisupervised.plot_q3 --prefix c_q3_course_reproduction_001
+.venv-q3/bin/python -m experiments.semisupervised.robustness_check --prefix c_rob_course_reproduction_001
+```
+
+Use unused prefixes: these experiment scripts refuse to overwrite an existing
+run. See [`experiments/semisupervised/README.md`](experiments/semisupervised/README.md)
+for pseudo-label thresholds, rounds, and the negative-result interpretation.
+
+## Learning curves and error analysis: Q2 and Q4
+
+The existing version of
+[`experiments/generalization/AlexYen_Train.ipynb`](experiments/generalization/AlexYen_Train.ipynb)
+is retained as provided. This packaging pass has not changed its experiment
+code or rerun the notebook. Saved outputs and execution counts were cleared
+for public distribution because error-analysis output contained competition
+passage excerpts. The original notebook and results remain in the team
+working repository; the archived learning-curve figure is retained here.
+
+From the team directory, open it in VS Code:
+
+```sh
+code experiments/generalization/AlexYen_Train.ipynb
+```
+
+Select a separate Python 3 notebook kernel, choose **Restart**, then **Run All**.
+The first executable cell installs the notebook's analysis dependencies.
+Keep the input files in `data/raw/`. The notebook uses seed 42 for its split,
+models and learning-curve sampling, 123 for shuffled CV, and 17 for its
+distribution-shift diagnostic. It constructs its own split; the canonical-split
+statement for the final pipeline above does not describe that notebook.
+
+Results are displayed in the notebook and retained when it is saved. Its final
+cells write their own candidate CSVs under `data/raw/`; use the root
+`train.py` / `predict.py` commands above for the selected final RoBERTa
+submission. The original execution instructions are in
+[`experiments/generalization/README.md`](experiments/generalization/README.md).
+
+## AI disclosure and development history
+
+[AI_DISCLOSURE.md](AI_DISCLOSURE.md) contains the member statements supplied for
+report Q6.3. Yousen used Codex for code generation, debugging, experiment execution,
+and report editing. Gabriel used Claude for code generation, debugging, and
+report editing. Their statements describe the ideas, decisions, corrections,
+and checks they personally contributed. Codex also assisted with this course
+packaging pass and its automated verification. Alexander Yen's individual
+statement is **pending**. Automated
+checks recorded in this repository should not be represented as personal
+review or independent reproduction by a team member.
+
+[DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md) records the development
+lineage and the relationship between the team working repository and this
+course submission. Preserve the substantive commits when reviewing or merging
+the course PR.
