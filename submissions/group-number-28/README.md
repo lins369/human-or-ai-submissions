@@ -21,8 +21,7 @@ Kaggle public AUROC was **0.96970**; this is a historical leaderboard result,
 not a guarantee for a new fit. Classical supervised comparisons, ablations,
 semi-supervised experiments, and the Q2/Q4 notebook are retained alongside the
 final entrypoints. See [development history](DEVELOPMENT_HISTORY.md) and
-[AI disclosure](AI_DISCLOSURE.md). The packaging checks and their scope are
-recorded in [verification](VERIFICATION.md).
+[AI disclosure](AI_DISCLOSURE.md).
 
 ## Setup
 
@@ -196,8 +195,7 @@ learning-curve and Q4 error-analysis code and improve report clarity. He reviewe
 the experimental setup, checked plots and metrics against saved results,
 assessed model errors, and revised the explanations to distinguish observations
 from possible explanations. Their statements describe the ideas, decisions,
-corrections, and checks they personally contributed. Codex also assisted with
-this course packaging pass and its automated verification. Automated checks
+corrections, and checks they personally contributed. Automated checks
 recorded in this repository should not be represented as personal review or
 independent reproduction by a team member.
 
@@ -213,6 +211,3 @@ the course PR.
 - [x] No competition CSVs, secrets, or huge weight dumps committed
 - [x] Meaningful commit history retained (not squashed away)
 - [x] We did not retrieve hidden labels from RAID or elsewhere
-
-The team confirmed the final statement. Repository checks for the other items
-are recorded in [VERIFICATION.md](VERIFICATION.md).

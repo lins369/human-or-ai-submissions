@@ -16,10 +16,3 @@ Claude AI was used primary for code generation, and debugging, but I developed t
 ## Alexander Yen — ay476
 
 I used an AI assistant to help generate and debug code for the Q2 learning curves and Q4 error analysis, and to improve the clarity of the report. I reviewed the experimental setup, checked the plots and reported metrics against the saved results, and assessed the interpretation of model errors. I also revised the explanations to ensure they reflected my understanding and distinguished observed patterns from possible explanations.
-
-## Course packaging
-
-Codex assisted with relocating the existing development history, preparing the
-independent final training and prediction entrypoints, documenting setup, and
-running automated checks. The packaging verification is recorded separately
-from the members' personal review statements above.
