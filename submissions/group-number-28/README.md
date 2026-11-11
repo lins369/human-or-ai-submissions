@@ -2,13 +2,17 @@
 
 Cornell Tech · Applied Machine Learning · Kaggle competition code submission.
 
+## Team members
+
 | Team member | NetID | Main work |
 | --- | --- | --- |
 | Yousen Lin | yl4358 | Q1 supervised comparisons; Q5 improvements; final RoBERTa pipeline |
 | Alexander Yen | ay476 | Q2 learning curves; Q4 generalization and error analysis |
 | Gabriel Draghici | gpd42 | Q3 semi-supervised learning; Q6 integration |
 
-Kaggle team name: **Group Number 28**. Course submission directory:
+## Kaggle team name
+
+**Group Number 28**. Course submission directory:
 `submissions/group-number-28/`.
 
 The final prediction pipeline fine-tunes RoBERTa-base on the original text,
@@ -20,7 +24,7 @@ final entrypoints. See [development history](DEVELOPMENT_HISTORY.md) and
 [AI disclosure](AI_DISCLOSURE.md). The packaging checks and their scope are
 recorded in [verification](VERIFICATION.md).
 
-## Final pipeline: install and prepare data
+## Setup
 
 All commands below start in `submissions/group-number-28/`, the directory
 containing this README. Python **3.11** is the neural environment; the source
@@ -59,7 +63,7 @@ CPU execution is supported but slower. The original final model used Apple MPS
 in FP32. Device and library differences can change fitted weights and scores;
 cross-device bitwise agreement is not promised.
 
-## Train and evaluate on the labeled validation split
+## Train / validate
 
 ```sh
 python train.py --output-dir artifacts/roberta-validation
@@ -75,6 +79,25 @@ completed run has a `completion.json` marker. Validate the prediction contract:
 ```sh
 python -m human_ai.check_predictions artifacts/roberta-validation/validation_predictions.csv --kind validation
 ```
+
+## Predict
+
+After selecting the recipe, fit a separate model on all 10,000 supplied labeled
+rows and predict the 3,000 test rows:
+
+```sh
+python train.py --full-data --output-dir artifacts/roberta-full
+python predict.py --model-dir artifacts/roberta-full --output submission.csv
+python -m human_ai.check_predictions submission.csv --kind submission
+```
+
+Pass the run directory to `--model-dir`, not its nested `model/` directory.
+`submission.csv` has columns `id,label`; `label` is the probability of AI
+authorship, class 1, rather than a thresholded class. The full-data fit has no
+independent validation score. These commands generate the Kaggle file locally;
+upload it through Kaggle separately.
+
+## Seeds and notes
 
 The fixed default recipe is:
 
@@ -93,24 +116,7 @@ Use new output directories for separate runs so their artifacts remain distinct.
 The final entrypoints are independent of historical study receipts and local
 research checkpoints.
 
-## Refit on all labels and write submission.csv
-
-After selecting the recipe, fit a separate model on all 10,000 supplied labeled
-rows and predict the 3,000 test rows:
-
-```sh
-python train.py --full-data --output-dir artifacts/roberta-full
-python predict.py --model-dir artifacts/roberta-full --output submission.csv
-python -m human_ai.check_predictions submission.csv --kind submission
-```
-
-Pass the run directory to `--model-dir`, not its nested `model/` directory.
-`submission.csv` has columns `id,label`; `label` is the probability of AI
-authorship, class 1, rather than a thresholded class. The full-data fit has no
-independent validation score. These commands generate the Kaggle file locally;
-upload it through Kaggle separately.
-
-## Historical classical experiments: Q1 and Q5
+### Historical classical experiments: Q1 and Q5
 
 The original classical models used a separate Python **3.12** environment.
 Keep its pinned NumPy and scikit-learn versions separate from the neural
@@ -133,7 +139,7 @@ experiments; those scripts are not the independent final training/prediction
 entrypoints above. A fresh clone does not recreate those historical prerequisites
 automatically.
 
-## Semi-supervised experiments: Q3
+### Semi-supervised experiments: Q3
 
 Q3 uses its recorded Python **3.13** environment, seed **20261109**, the canonical
 8,000/2,000 split, and `data/raw/unlabeled.csv`. From this team directory:
@@ -151,7 +157,7 @@ Use unused prefixes: these experiment scripts refuse to overwrite an existing
 run. See [`experiments/semisupervised/README.md`](experiments/semisupervised/README.md)
 for pseudo-label thresholds, rounds, and the negative-result interpretation.
 
-## Learning curves and error analysis: Q2 and Q4
+### Learning curves and error analysis: Q2 and Q4
 
 The existing version of
 [`experiments/generalization/AlexYen_Train.ipynb`](experiments/generalization/AlexYen_Train.ipynb)
@@ -180,19 +186,33 @@ cells write their own candidate CSVs under `data/raw/`; use the root
 submission. The original execution instructions are in
 [`experiments/generalization/README.md`](experiments/generalization/README.md).
 
-## AI disclosure and development history
+## AI assistance
 
 [AI_DISCLOSURE.md](AI_DISCLOSURE.md) contains the member statements supplied for
 report Q6.3. Yousen used Codex for code generation, debugging, experiment execution,
 and report editing. Gabriel used Claude for code generation, debugging, and
-report editing. Their statements describe the ideas, decisions, corrections,
-and checks they personally contributed. Codex also assisted with this course
-packaging pass and its automated verification. Alexander Yen's individual
-statement is **pending**. Automated
-checks recorded in this repository should not be represented as personal
-review or independent reproduction by a team member.
+report editing. Alexander used an AI assistant to generate and debug the Q2
+learning-curve and Q4 error-analysis code and improve report clarity. He reviewed
+the experimental setup, checked plots and metrics against saved results,
+assessed model errors, and revised the explanations to distinguish observations
+from possible explanations. Their statements describe the ideas, decisions,
+corrections, and checks they personally contributed. Codex also assisted with
+this course packaging pass and its automated verification. Automated checks
+recorded in this repository should not be represented as personal review or
+independent reproduction by a team member.
 
 [DEVELOPMENT_HISTORY.md](DEVELOPMENT_HISTORY.md) records the development
 lineage and the relationship between the team working repository and this
 course submission. Preserve the substantive commits when reviewing or merging
 the course PR.
+
+## Submission checklist
+
+- [x] Code is only under `submissions/<kaggle-team-name>/`
+- [x] Team `README.md` documents environment, commands, seeds, and AI use
+- [x] No competition CSVs, secrets, or huge weight dumps committed
+- [x] Meaningful commit history retained (not squashed away)
+- [x] We did not retrieve hidden labels from RAID or elsewhere
+
+The team confirmed the final statement. Repository checks for the other items
+are recorded in [VERIFICATION.md](VERIFICATION.md).

@@ -1,8 +1,7 @@
 # AI-tool disclosure — Group Number 28
 
 These member statements are supplied for the code README and report Q6.3.
-The wording below is the wording provided by the respective members. Alexander
-Yen's statement is pending and must be completed to finish the team disclosure.
+The wording below is the wording provided by the respective members.
 Recorded automated verification is distinct from the personal checks described
 by a member.
 
@@ -16,7 +15,7 @@ Claude AI was used primary for code generation, and debugging, but I developed t
 
 ## Alexander Yen — ay476
 
-**Pending disclosure.**
+I used an AI assistant to help generate and debug code for the Q2 learning curves and Q4 error analysis, and to improve the clarity of the report. I reviewed the experimental setup, checked the plots and reported metrics against the saved results, and assessed the interpretation of model errors. I also revised the explanations to ensure they reflected my understanding and distinguished observed patterns from possible explanations.
 
 ## Course packaging
 
